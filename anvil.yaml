@@ -681,7 +681,7 @@ metadata:
   title: Good Landlord
 name: Good Landlord
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=9baeb9c5ca\"></script>\n<meta name=\"viewport\" content=\"width=device-width,\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=c7062a4761\"></script>\n<meta name=\"viewport\" content=\"width=device-width,\
     \ initial-scale=1, viewport-fit=cover\">\n<meta name=\"theme-color\" content=\"#fbf4ea\">\n<meta name=\"apple-mobile-web-app-capable\"\
     \ content=\"yes\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"\
     https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..700,0..100,0..1&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap\"\
@@ -690,7 +690,10 @@ native_deps:
     \ its own <link rel=\"icon\">, so drop any other icon link. */\n(function () {\n  function keep() {\n    var ours = document.getElementById('ui-favicon');\n\
     \    if (!ours) return;\n    document.querySelectorAll('link[rel~=\"icon\"]').forEach(function (l) { if (l !== ours) l.remove();\
     \ });\n  }\n  keep();\n  document.addEventListener('DOMContentLoaded', keep);\n  window.addEventListener('load', keep);\n\
-    })();\n</script>\n<link rel=\"stylesheet\" href=\"_/theme/app.css?v=f22f9ffbe4\">\n<script src=\"_/theme/app.js?v=c757e3d72a\"\
+    })();\n</script>\n\n<!-- Prepsto feedback panel: every \"Submit feedback\" link and button opens it (it is the only feedback\
+    \ channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->\n\
+    <script src=\"https://prepsto.com/_/theme/widget.js\" data-prepsto=\"ba8qvqf\" data-button=\"false\" data-label=\"Submit\
+    \ feedback\" async></script>\n<link rel=\"stylesheet\" href=\"_/theme/app.css?v=f22f9ffbe4\">\n<script src=\"_/theme/app.js?v=0410198573\"\
     ></script>\n"
 package_name: Good_Landlord
 runtime_options:
