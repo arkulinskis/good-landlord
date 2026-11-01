@@ -675,16 +675,27 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: Track rent, claimable expenses, mortgage and long-term profit for your rentals, and give tenants a link to
-    a permanent, tamper-evident record of messages and repair requests.
+  description: Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident
+    record of messages and repairs.
   logo_img: asset:icon-512.png
-  title: Good Landlord
+  title: 'Good Landlord: rental numbers and fair tenant records'
 name: Good Landlord
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=c7062a4761\"></script>\n<meta name=\"viewport\" content=\"width=device-width,\
-    \ initial-scale=1, viewport-fit=cover\">\n<meta name=\"theme-color\" content=\"#fbf4ea\">\n<meta name=\"apple-mobile-web-app-capable\"\
-    \ content=\"yes\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"\
-    https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..700,0..100,0..1&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap\"\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=c7062a4761\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/goodlandlord.json\
+    \ and run seo.py, not here) -->\n<meta name=\"robots\" content=\"index, follow, max-image-preview:large, max-snippet:-1,\
+    \ max-video-preview:-1\">\n<meta name=\"keywords\" content=\"landlord app, rental property tracker, rent tracking, landlord\
+    \ expense tracker, rental cash flow calculator, tenant repair requests, small landlord software, rental property profit,\
+    \ tenant communication log\">\n<meta name=\"author\" content=\"Arkvital\">\n<meta property=\"og:type\" content=\"website\"\
+    >\n<meta property=\"og:site_name\" content=\"Good Landlord\">\n<meta property=\"og:title\" content=\"Good Landlord: rental\
+    \ numbers and fair tenant records\">\n<meta property=\"og:description\" content=\"Track rent, expenses, mortgage and long-term\
+    \ profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs.\">\n<meta property=\"\
+    og:locale\" content=\"en_CA\">\n<meta name=\"twitter:card\" content=\"summary\">\n<meta name=\"twitter:title\" content=\"\
+    Good Landlord: rental numbers and fair tenant records\">\n<meta name=\"twitter:description\" content=\"Track rent, expenses,\
+    \ mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs.\"\
+    >\n<!-- seo:end -->\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n<meta\
+    \ name=\"theme-color\" content=\"#fbf4ea\">\n<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\n<link rel=\"\
+    preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n\
+    <link href=\"https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..700,0..100,0..1&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap\"\
     \ rel=\"stylesheet\">\n<link id=\"ui-favicon\" rel=\"icon\" type=\"image/svg+xml\" href=\"_/theme/icon.svg?v=b5d3e61f00\"\
     >\n<link rel=\"apple-touch-icon\" href=\"_/theme/icon-180.png?v=b5d3e61f00\">\n<script>\n/* Keep our tab icon: Anvil adds\
     \ its own <link rel=\"icon\">, so drop any other icon link. */\n(function () {\n  function keep() {\n    var ours = document.getElementById('ui-favicon');\n\
