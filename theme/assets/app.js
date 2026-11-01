@@ -1564,11 +1564,23 @@
     bandLead: 'Free, private, and ready in minutes.'
   };
 
+  // before: the shoebox. after: the same rental in the app. Drag the handle (a range input, so keys work too).
   function heroArt() {
-    return '<div class="lp-art" aria-hidden="true"><div class="scene"><span class="sun"></span>' + GL.house({ door: 'red', kind: 'duplex', glow: .95, smoke: true }) + '<span class="gnd"></span></div>' +
+    var mess = '<div class="side lp-mess" aria-hidden="true"><span class="ring" style="left:58%;top:58%"></span>' +
+      '<div class="p rc" style="left:4%;top:16%;transform:rotate(-8deg)"><b>HOME HARDWARE</b>Faucet cartridge 18.49<br>Plumber tape 3.99<br>TOTAL 25.15<br>Oct 2?</div>' +
+      '<div class="p rc hide-s" style="left:21%;top:52%;transform:rotate(6deg)"><b>Insurance?</b>Policy 88-221<br>renews ???<br>$1,140 / yr</div>' +
+      '<div class="p st" style="left:30%;top:9%;transform:rotate(4deg)">Upstairs paid?? cash or e-transfer? ask</div>' +
+      '<div class="p st pk hide-s" style="left:5%;top:62%;transform:rotate(-5deg)">Property tax due… March? April?</div>' +
+      '<div class="sms" style="left:36%;top:44%;transform:rotate(-2deg)"><small>Tenant · 11:42 PM</small>the kitchen tap is dripping again??</div>' +
+      '<div class="sms hide-s" style="left:30%;top:72%;transform:rotate(2deg)"><small>Tenant · 3 weeks later</small>did you get my text about the tap</div>' +
+      '<span class="q" style="left:46%;top:24%">?</span></div>';
+    var app = '<div class="side lp-app" aria-hidden="true"><div class="scene"><span class="sun"></span>' + GL.house({ door: 'red', kind: 'duplex', glow: .95, smoke: true }) + '<span class="gnd"></span></div>' +
       '<div class="tag t1"><span class="muted">Cash flow this month</span><b class="gl-pos">+$612</b></div>' +
-      '<div class="tag t2"><div class="row">' + GL.statusChip('done') + '<span class="small faint">#4</span></div><b style="font-size:1rem">Kitchen tap drips</b><span class="muted">Asked Monday · fixed Wednesday</span></div>' +
+      '<div class="tag t2"><div class="row">' + GL.statusChip('done') + '<span class="small faint">#4</span></div><b style="font-size:1rem">Kitchen tap drips</b><span class="muted">Asked Monday · fixed Wednesday · $25.15 claimed</span></div>' +
       '<div class="tag t3">' + UI.icon('seal') + 'Sealed record · 38 entries</div></div>';
+    return '<div class="lp-ba" data-ba>' + mess + app +
+      '<span class="lbl l" aria-hidden="true">The shoebox</span><span class="lbl r" aria-hidden="true">Good Landlord</span>' +
+      '<input type="range" min="0" max="100" value="50" aria-label="Drag to compare the shoebox with the same rental in Good Landlord"><span class="handle"></span></div>';
   }
 
   UI.page('landing', { title: 'Welcome' }, function (view, ctx) {
@@ -1577,7 +1589,7 @@
       : '<a class="ui-btn primary lg" href="#auth/signup" data-go="auth/signup">' + esc(C.cta) + ' ' + UI.icon('arrow') + '</a>' +
         '<a class="ui-btn lg" href="#auth" data-go="auth">I have an account</a>';
     view.innerHTML =
-      '<section class="lp-hero"><div class="ui-wrap"><div>' +
+      '<section class="lp-hero"><div class="ui-wrap"><div class="lp-pitch">' +
         '<div class="eyebrow">' + esc(C.eyebrow) + '</div><h1>' + C.title + '</h1><p class="lp-lead">' + esc(C.lead) + '</p>' +
         '<div class="lp-cta">' + primary + '<a class="ui-btn lg ghost" href="#t/demo-upstairs">' + UI.icon('key') + 'See the tenant side</a></div>' +
         '<div class="lp-proof">' + C.proof.map(function (p) { return '<span>' + UI.icon('check') + esc(p) + '</span>'; }).join('') + '</div>' +
@@ -1597,6 +1609,8 @@
       '<section class="lp-section"><div class="ui-wrap"><div class="lp-band"><div><h2>' + esc(C.bandTitle) + '</h2><p>' + esc(C.bandLead) + '</p></div>' +
         (me ? '<a class="ui-btn lg" href="#home" data-go="home">Open the app</a>' : '<a class="ui-btn lg" href="#auth/signup" data-go="auth/signup">' + esc(C.cta) + '</a>') +
       '</div></div></section>';
+    var ba = view.querySelector('[data-ba]');
+    if (ba) ba.querySelector('input').addEventListener('input', function (e) { ba.style.setProperty('--x', e.target.value + '%'); });
   });
 })();
 
