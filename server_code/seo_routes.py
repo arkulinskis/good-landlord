@@ -58,8 +58,8 @@ SEO = {
    "Yes. Load a sample portfolio of three fictional rentals and clear it in one click."
   ]
  ],
- "site": "",
- "updated": "2026-10-31",
+ "site": "https://good-landlord.anvil.app",
+ "updated": "2026-11-01",
  "icon": "icon-512.png",
  "colors": {
   "bg": "#fbf4ea",
