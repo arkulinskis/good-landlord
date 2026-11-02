@@ -681,7 +681,7 @@ metadata:
   title: 'Good Landlord: rental numbers and fair tenant records'
 name: Good Landlord
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=b7efb4b137\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/goodlandlord.json\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=b166b930f1\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/goodlandlord.json\
     \ and run seo.py, not here) -->\n<meta name=\"robots\" content=\"index, follow, max-image-preview:large, max-snippet:-1,\
     \ max-video-preview:-1\">\n<meta name=\"keywords\" content=\"landlord app, rental property tracker, rent tracking, landlord\
     \ expense tracker, rental cash flow calculator, tenant repair requests, small landlord software, rental property profit,\
