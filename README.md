@@ -6,7 +6,7 @@ private link to a permanent, tamper-evident record of messages and repair reques
 done). Warm-home look: linen, terracotta and honey, Fraunces + Nunito Sans. Built on [Anvil](https://anvil.works).
 
 - **App repo:** github.com/arkulinskis/good-landlord (branch `master`). Anvil pulls `master`.
-- **Live:** not published yet (the user publishes in Anvil, then the URL goes in apps.json and here).
+- **Live:** https://good-landlord.anvil.app
 
 ## What it does
 
