@@ -11,7 +11,7 @@ done). Warm-home look: linen, terracotta and honey, Fraunces + Nunito Sans. Buil
 ## What it does
 
 **For everyone:** a landing page written for landlords and tenants (hero house at dusk, "good for both sides of the door",
-how it works, features, FAQ), a **public tenant demo** at `#t/demo-upstairs`, sign-up with email and password, a feedback
+how it works, features, FAQ), a **public tenant demo** at `#t/demo-upstairs`, sign-up with email and password or Google, a feedback
 form, and the Privacy & Terms page.
 
 **For landlords (signed in):**
@@ -62,7 +62,7 @@ removes demo rows, and an unused tenancy (opening entry only, never visited) can
 ## Setting it up in Anvil (once)
 
 1. In the Anvil editor: **Create app → Clone from GitHub**, and paste `https://github.com/arkulinskis/good-landlord`.
-2. **Users** service: email + password, sign-up allowed (already set in `anvil.yaml`; check it).
+2. **Users** service: email + password and "Continue with Google", sign-up allowed (already set in `anvil.yaml`; check it).
 3. Open the app in the editor. If it shows a **Schema Mismatch** alert, choose **"The schema of the source code is correct"** so Anvil creates the tables.
 4. **Run** it and sign up with **arkulinskis@gmail.com** straight away (that account becomes the admin).
 5. **Publish** (Publish → public URL, or your own domain).
