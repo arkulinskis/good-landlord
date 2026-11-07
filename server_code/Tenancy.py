@@ -102,7 +102,7 @@ def save_tenancy(data):
     email = C.text(data.get("tenant_email"), 120)
     if email and ("@" not in email or "." not in email.split("@")[-1]):
         return C.fail("That email address doesn't look right.")
-    fields = {"unit": C.text(data.get("unit"), 40), "tenant_name": name, "tenant_email": email,
+    fields: dict = {"unit": C.text(data.get("unit"), 40), "tenant_name": name, "tenant_email": email,
               "rent": round(C.num(data.get("rent"), 0, 1e7, 0), 2), "due_day": int(C.num(data.get("due_day"), 1, 28, 1)),
               "deposit": round(C.num(data.get("deposit"), 0, 1e7, 0), 2),
               "start_date": C.date(data.get("start_date"), C.now().date()), "end_date": C.date(data.get("end_date"))}

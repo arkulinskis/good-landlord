@@ -1,0 +1,85 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-page-head">
+        <div><h1>Money</h1><p class="muted">Rent in, costs out, and what you can claim.</p></div>
+        <anvil-component type="Button" name="add_button" prop:text="Add entry" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+      </div>
+      <nav class="ui-tabs">
+        <a href="#money/ledger" anvil:name="tab_ledger"><i class="ic ic-coins"></i>Ledger</a>
+        <a href="#money/rent" anvil:name="tab_rent"><i class="ic ic-receipt"></i>Rent roll</a>
+        <a href="#money/tax" anvil:name="tab_tax"><i class="ic ic-percent"></i>Tax summary</a>
+      </nav>
+
+      <div class="ui-empty" anvil:name="no_props"><i class="ic ic-home"></i><h2>Add a property first</h2><p>Then record rent and expenses here.</p><a class="ui-btn primary" href="#home">Go to Home</a></div>
+
+      <div anvil:name="ledger_part">
+        <div class="mn-filters">
+          <anvil-component type="DropDown" name="f_prop"></anvil-component>
+          <anvil-component type="DropDown" name="f_year"></anvil-component>
+          <anvil-component type="DropDown" name="f_cat"></anvil-component>
+          <div class="ui-seg" role="group" aria-label="Money in or out">
+            <button type="button" anvil:name="k_all" anvil:on-dom:click="self.kind_click" data-kind="all">All</button>
+            <button type="button" anvil:name="k_in" anvil:on-dom:click="self.kind_click" data-kind="income">In</button>
+            <button type="button" anvil:name="k_out" anvil:on-dom:click="self.kind_click" data-kind="expense">Out</button>
+          </div>
+          <span class="ui-spacer"></span>
+          <anvil-component type="Button" name="csv_button" prop:text="CSV" prop:role='["btn", "btn-sm", "ic-download"]'></anvil-component>
+        </div>
+        <div class="mn-sum">
+          <div class="gl-kpi"><div class="lbl">Money in</div><anvil-component type="Label" name="s_in" prop:role='["kpi-val"]'></anvil-component></div>
+          <div class="gl-kpi"><div class="lbl">Money out</div><anvil-component type="Label" name="s_out" prop:role='["kpi-val"]'></anvil-component></div>
+          <div class="gl-kpi"><div class="lbl">Difference</div><anvil-component type="Label" name="s_diff" prop:role='["kpi-val"]'></anvil-component><div class="sub">before mortgage payments</div></div>
+        </div>
+        <anvil-component type="RepeatingPanel" name="months_panel" prop:item_template="Good_Landlord.Items.MonthGroup"></anvil-component>
+        <div class="ui-empty" anvil:name="no_rows"><i class="ic ic-coins"></i><h2>Nothing here</h2><p>No entries match these filters.</p></div>
+      </div>
+
+      <div anvil:name="rent_part">
+        <div class="ui-row between mn-rent-nav">
+          <div class="ui-row">
+            <anvil-component type="Button" name="prev_month" prop:role='["btn", "btn-icon", "ic-back"]' prop:tooltip="Previous month"></anvil-component>
+            <anvil-component type="Label" name="month_label" prop:role='["mn-month-title"]'></anvil-component>
+            <anvil-component type="Button" name="next_month" prop:role='["btn", "btn-icon", "ic-arrow"]' prop:tooltip="Next month"></anvil-component>
+          </div>
+          <anvil-component type="Button" name="this_month" prop:text="This month" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+        </div>
+        <div class="ui-card">
+          <div class="ui-row between"><b anvil:dom-node="collected"></b><span class="muted small" anvil:dom-node="collected_pct"></span></div>
+          <div class="mn-bar" role="progressbar" aria-label="Rent collected" anvil:dom-node="bar"><span anvil:dom-node="bar_fill"></span></div>
+          <p class="ui-hint">Marking rent as paid adds it to the ledger and writes a receipt into the tenant's record.</p>
+        </div>
+        <div class="ui-card mn-rent-card">
+          <anvil-component type="RepeatingPanel" name="rent_panel" prop:item_template="Good_Landlord.Items.RentRow" prop:role='["mn-rents"]'></anvil-component>
+          <p class="muted mn-none" anvil:name="no_rent">No active tenancies. Add a tenant from a property page.</p>
+        </div>
+      </div>
+
+      <div anvil:name="tax_part">
+        <div class="mn-filters">
+          <anvil-component type="DropDown" name="t_prop"></anvil-component>
+          <anvil-component type="DropDown" name="t_year"></anvil-component>
+          <span class="ui-spacer"></span>
+          <button type="button" class="ui-btn sm mn-print" anvil:on-dom:click="self.print_click"><i class="ic ic-print"></i>Print or save as PDF</button>
+        </div>
+        <div class="ui-card mn-tax">
+          <div class="ui-row between"><anvil-component type="Label" name="tax_title" prop:role='["mn-tax-title"]'></anvil-component><span class="ui-badge honey" anvil:name="partial">So far this year</span></div>
+          <p class="muted small mn-region"><span anvil:dom-node="region"></span> <a href="#profile">Change country</a></p>
+          <div class="mn-th"><span>Income</span><span class="n">Amount</span></div>
+          <anvil-component type="RepeatingPanel" name="income_panel" prop:item_template="Good_Landlord.Items.TaxRow"></anvil-component>
+          <h3>Claimable expenses</h3>
+          <anvil-component type="RepeatingPanel" name="exp_panel" prop:item_template="Good_Landlord.Items.TaxRow"></anvil-component>
+          <h3>Net rental income</h3>
+          <anvil-component type="Label" name="net_label" prop:role='["mn-net"]'></anvil-component>
+          <p class="muted small" anvil:dom-node="net_note"></p>
+          <div anvil:name="cap_part"><h3>Capital improvements (not claimed all at once)</h3>
+            <p class="muted small">These are depreciated over several years (capital cost allowance in Canada, depreciation in the US). Give this list to your accountant.</p>
+            <anvil-component type="RepeatingPanel" name="cap_panel" prop:item_template="Good_Landlord.Items.TaxRow"></anvil-component></div>
+          <div anvil:name="nc_part"><h3>Not claimable</h3>
+            <anvil-component type="RepeatingPanel" name="nc_panel" prop:item_template="Good_Landlord.Items.TaxRow"></anvil-component></div>
+          <p class="ui-hint mn-disclaim"><i class="ic ic-info"></i> A helpful summary of what you recorded, not tax advice. Rules differ by country and situation; check with an accountant before you file.</p>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

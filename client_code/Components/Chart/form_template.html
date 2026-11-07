@@ -1,0 +1,12 @@
+---
+custom_component: true
+properties: []
+toolbox_item:
+  title: Chart
+  group: Good Landlord
+help_text: |
+  A box the engine draws a chart into (GL.lineChart / GL.barChart in theme/assets/gl.js: one axis, a legend, a
+  hover/tap tooltip). The page calls plot(fn) with a function that gets the box's DOM element; it runs again when
+  the window width changes.
+---
+<div class="gl-chart-host"><div class="gl-chart-box" anvil:dom-node="box"></div></div>

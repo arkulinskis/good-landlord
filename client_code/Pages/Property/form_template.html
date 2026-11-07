@@ -1,0 +1,61 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <a href="#home" class="small gl-back"><i class="ic ic-back"></i>All properties</a>
+      <div class="ui-empty" anvil:name="missing"><i class="ic ic-home"></i><h2>That property isn't here</h2><p>It may have been deleted.</p><a class="ui-btn" href="#home">Back home</a></div>
+      <div anvil:name="main_part">
+        <div class="gl-banner" anvil:name="archived_banner"><i class="ic ic-info"></i><span class="gl-banner-t">This property is archived: it's left out of your totals.</span>
+          <anvil-component type="Button" name="unarchive_top" prop:text="Bring it back" prop:role='["btn", "btn-sm"]'></anvil-component></div>
+        <div class="pp-head">
+          <anvil-component type="Good_Landlord.Components.House" name="house" prop:size="110"></anvil-component>
+          <div><anvil-component type="Label" name="title" prop:role='["pp-title"]'></anvil-component><p class="muted pp-sub" anvil:dom-node="sub"></p></div>
+          <div class="ui-row acts">
+            <anvil-component type="Button" name="edit_button" prop:text="Edit" prop:role='["btn", "ic-edit"]'></anvil-component>
+            <a class="ui-btn primary" href="#deal" anvil:dom-node="deal_link"><i class="ic ic-chart"></i>Deal check</a>
+          </div>
+        </div>
+        <div class="gl-kpis">
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-home"></i>Worth today</div><anvil-component type="Label" name="k_value" prop:role='["kpi-val"]'></anvil-component><div class="sub" anvil:dom-node="k_value_sub"></div></div>
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-percent"></i>Mortgage owed</div><anvil-component type="Label" name="k_owed" prop:role='["kpi-val"]'></anvil-component><div class="sub" anvil:dom-node="k_owed_sub"></div></div>
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-key"></i>Equity</div><anvil-component type="Label" name="k_equity" prop:role='["kpi-val"]'></anvil-component><div class="sub" anvil:dom-node="k_equity_sub"></div></div>
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-coins"></i>Cash flow</div><anvil-component type="Label" name="k_cash" prop:role='["kpi-val"]'></anvil-component><div class="sub" anvil:dom-node="k_cash_sub"></div></div>
+        </div>
+        <div class="pp-grid">
+          <div class="ui-stack">
+            <div class="ui-card">
+              <div class="ui-row between"><h3 class="card-h">Money in and out</h3><a class="small" href="#money" anvil:dom-node="ledger_link">Full ledger <i class="ic ic-arrow"></i></a></div>
+              <p class="muted small">Last 12 months. The mortgage isn't in here: it's counted from your loan.</p>
+              <anvil-component type="Good_Landlord.Components.Chart" name="chart"></anvil-component>
+              <anvil-component type="RepeatingPanel" name="entries_panel" prop:item_template="Good_Landlord.Items.EntryRow" prop:role='["pp-entries"]'></anvil-component>
+              <div class="ui-row pp-entry-acts">
+                <anvil-component type="Button" name="add_expense" prop:text="Expense" prop:role='["btn", "btn-sm", "ic-plus"]'></anvil-component>
+                <anvil-component type="Button" name="add_income" prop:text="Income" prop:role='["btn", "btn-sm", "ic-plus"]'></anvil-component>
+              </div>
+            </div>
+            <div class="ui-card">
+              <div class="ui-row between"><h3 class="card-h">Tenants</h3><anvil-component type="Button" name="add_tenant" prop:text="Add tenant" prop:role='["btn", "btn-sm", "btn-primary", "ic-plus"]'></anvil-component></div>
+              <anvil-component type="RepeatingPanel" name="tenants_panel" prop:item_template="Good_Landlord.Items.PropTenant" prop:role='["pp-tens"]'></anvil-component>
+              <p class="muted pp-none" anvil:name="no_tenants">No tenants yet. Adding one opens a permanent record and a private link for them.</p>
+            </div>
+          </div>
+          <div class="ui-stack">
+            <div class="ui-card pp-mort">
+              <div class="ui-row between"><h3 class="card-h">Mortgage</h3><anvil-component type="Button" name="add_mort_top" prop:text="Add" prop:role='["btn", "btn-sm", "btn-primary", "ic-plus"]'></anvil-component></div>
+              <anvil-component type="RepeatingPanel" name="mort_panel" prop:item_template="Good_Landlord.Items.MortgageBox" prop:role='["pp-morts"]'></anvil-component>
+              <anvil-component type="Button" name="add_mort_more" prop:text="Another loan" prop:role='["btn", "btn-sm", "btn-ghost", "ic-plus"]'></anvil-component>
+              <p class="muted pp-none" anvil:name="no_mort">Add your mortgage to see your real cash flow, equity, and the interest you can claim.</p>
+            </div>
+            <div class="ui-card" anvil:name="notes_card"><h3>Notes</h3><anvil-component type="Label" name="notes" prop:role='["pp-notes"]'></anvil-component></div>
+            <div class="ui-card"><h3>Keep or let go</h3><p class="muted small">Archive a property you sold: it leaves your totals, its records stay.</p>
+              <div class="ui-row">
+                <anvil-component type="Button" name="archive_button" prop:text="Archive" prop:role='["btn", "btn-sm", "ic-inbox"]'></anvil-component>
+                <anvil-component type="Button" name="unarchive_button" prop:text="Unarchive" prop:role='["btn", "btn-sm"]'></anvil-component>
+                <anvil-component type="Button" name="delete_button" prop:text="Delete" prop:role='["btn", "btn-sm", "btn-danger", "ic-trash"]'></anvil-component>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

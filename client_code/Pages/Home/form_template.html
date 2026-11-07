@@ -1,0 +1,65 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div anvil:name="empty_part">
+        <div class="hm-head"><div><anvil-component type="Label" name="hello_empty" prop:role='["hm-title"]'></anvil-component><p class="muted hm-date">Welcome home.</p></div></div>
+        <div class="ui-card hm-empty">
+          <div>
+            <h2>Let's set up your first rental</h2>
+            <p class="muted">Add a property and its mortgage, and Good Landlord works out your cash flow, your equity and what you'd make if you sold. Add tenants to give each one a private link for messages and repair requests.</p>
+            <div class="ui-row hm-empty-acts">
+              <anvil-component type="Button" name="add_prop_empty" prop:text="Add a property" prop:role='["btn", "btn-primary", "btn-lg", "ic-plus"]'></anvil-component>
+              <anvil-component type="Button" name="sample_button" prop:text="Explore with a sample" prop:role='["btn", "btn-lg", "ic-sparkle"]'></anvil-component>
+            </div>
+            <p class="ui-hint">The sample adds three fictional rentals with tenants, rent and repairs to your account. You can clear it in one click.</p>
+          </div>
+          <anvil-component type="Good_Landlord.Components.House" name="empty_house" prop:door="red" prop:glow="0.9" prop:smoke="true" prop:size="180"></anvil-component>
+        </div>
+      </div>
+
+      <div anvil:name="main_part">
+        <div class="gl-banner" anvil:name="sample_banner"><i class="ic ic-sparkle"></i><span class="gl-banner-t">You're exploring the <b>sample portfolio</b>. Everything here is fictional.</span>
+          <anvil-component type="Button" name="clear_sample" prop:text="Clear the sample" prop:role='["btn", "btn-sm"]'></anvil-component></div>
+        <div class="hm-head">
+          <div><anvil-component type="Label" name="hello" prop:role='["hm-title"]'></anvil-component><anvil-component type="Label" name="date_line" prop:role='["muted", "hm-date"]'></anvil-component></div>
+          <div class="ui-row">
+            <anvil-component type="Button" name="add_entry" prop:text="Add expense" prop:role='["btn", "ic-receipt"]'></anvil-component>
+            <anvil-component type="Button" name="add_prop" prop:text="Property" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+          </div>
+        </div>
+        <div class="hm-street">
+          <span class="moon" aria-hidden="true"></span>
+          <div class="row">
+            <anvil-component type="RepeatingPanel" name="street_panel" prop:item_template="Good_Landlord.Items.StreetHouse" prop:role='["contents"]'></anvil-component>
+            <button type="button" class="h hm-add" anvil:on-dom:click="self.add_house_click" title="Add a property"><span class="hm-add-box"><i class="ic ic-plus"></i></span><span class="lbl">Add</span></button>
+          </div>
+          <div class="ground"></div>
+        </div>
+        <div class="gl-kpis">
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-receipt"></i>Rent this month</div><anvil-component type="Label" name="k_rent" prop:role='["kpi-val"]'></anvil-component><div class="sub" anvil:dom-node="k_rent_sub"></div></div>
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-coins"></i>Cash flow per month</div><anvil-component type="Label" name="k_cash" prop:role='["kpi-val"]'></anvil-component><div class="sub">after mortgage and typical costs</div></div>
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-key"></i>Your equity</div><anvil-component type="Label" name="k_equity" prop:role='["kpi-val"]'></anvil-component><div class="sub">value minus what you owe</div></div>
+          <div class="gl-kpi"><div class="lbl"><i class="ic ic-chart"></i>If you sold today</div><anvil-component type="Label" name="k_profit" prop:role='["kpi-val"]'></anvil-component><div class="sub" anvil:dom-node="k_profit_sub"></div></div>
+        </div>
+        <div class="hm-cols">
+          <div>
+            <div class="ui-row between hm-props-head"><h2>Your properties</h2><a href="#deal" class="small">Deal check <i class="ic ic-arrow"></i></a></div>
+            <anvil-component type="RepeatingPanel" name="props_panel" prop:item_template="Good_Landlord.Items.PropCard" prop:role='["hm-props"]'></anvil-component>
+            <anvil-component type="Label" name="archived_note" prop:role='["fine-print"]'></anvil-component>
+          </div>
+          <div class="ui-stack">
+            <div class="ui-card"><h3>Needs your attention</h3>
+              <anvil-component type="RepeatingPanel" name="att_panel" prop:item_template="Good_Landlord.Items.AttnRow" prop:role='["hm-att"]'></anvil-component>
+              <p class="muted" anvil:name="calm">All calm: no new requests, unread messages or late rent. <i class="ic ic-heart"></i></p>
+            </div>
+            <div class="ui-card"><h3>Your landlord badges</h3>
+              <anvil-component type="RepeatingPanel" name="badges_panel" prop:item_template="Good_Landlord.Items.BadgeRow" prop:role='["hm-badges"]'></anvil-component>
+              <p class="ui-hint" anvil:name="badges_hint">Tenants see these on their page. They come from how fast you answer and fix requests.</p>
+              <p class="muted small" anvil:name="no_badges">Answer your tenants' requests and badges appear here (and on their page).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

@@ -1,0 +1,59 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="tp">
+      <div class="tp-top"><div class="in"><img src="_/theme/icon.svg" alt="" width="30" height="30"><b anvil:dom-node="top_title">Good Landlord</b><span class="ui-spacer"></span><span class="small muted tp-brand">Good Landlord</span></div></div>
+      <div class="tp-wrap">
+        <div class="ui-empty tp-bad" anvil:name="bad"><i class="ic ic-link"></i><h2>This link doesn't open a home</h2><p anvil:dom-node="bad_text"></p><a class="ui-btn" href="#landing">What is Good Landlord?</a></div>
+        <div anvil:name="main_part">
+          <div class="gl-banner tp-demo" anvil:name="demo_banner"><i class="ic ic-sparkle"></i><span class="gl-banner-t">This is a <b>demo</b> of a tenant's page: the people are fictional. Try writing a message or asking for a repair.</span><a class="ui-btn sm" href="#landing">About Good Landlord</a></div>
+          <div class="tp-hero">
+            <anvil-component type="Good_Landlord.Components.House" name="house" prop:glow="0.9" prop:smoke="true" prop:size="110"></anvil-component>
+            <div><anvil-component type="Label" name="hello" prop:role='["tp-title"]'></anvil-component>
+              <p class="muted tp-intro">Your landlord is <b anvil:dom-node="landlord"></b>. Write here or ask for repairs: everything is dated, kept for good, and nobody (not even your landlord) can edit or delete it.</p>
+              <anvil-component type="RepeatingPanel" name="badges_panel" prop:item_template="Good_Landlord.Items.BadgeRow" prop:role='["tp-badges"]'></anvil-component></div>
+          </div>
+          <div class="gl-seal" anvil:dom-node="seal"><i class="ic ic-seal" anvil:dom-node="seal_icon"></i><span class="gl-seal-t"><b anvil:dom-node="seal_head"></b> <span anvil:dom-node="seal_text"></span> <code anvil:dom-node="seal_code"></code></span>
+          <anvil-component type="Button" name="verify_button" prop:text="Check again" prop:role='["btn", "btn-sm", "btn-ghost", "ic-refresh"]'></anvil-component></div>
+          <div class="gl-banner tp-confirm" anvil:name="confirm_banner"><i class="ic ic-check"></i><span class="gl-banner-t"><b anvil:dom-node="confirm_text"></b> Is it fixed?</span>
+            <anvil-component type="Button" name="answer_button" prop:text="Answer" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component></div>
+          <div class="tp-grid">
+            <section class="ui-card">
+              <div class="ui-row between"><h2 class="tp-h2">Messages</h2><anvil-component type="Button" name="ask_top" prop:text="Ask for a repair" prop:role='["btn", "btn-sm", "ic-wrench"]'></anvil-component></div>
+              <div class="tp-thread"><anvil-component type="RepeatingPanel" name="thread_panel" prop:item_template="Good_Landlord.Items.ThreadEntry" prop:role='["gl-thread"]'></anvil-component></div>
+              <div class="gl-compose">
+                <anvil-component type="TextArea" name="compose_box"></anvil-component>
+                <anvil-component type="Button" name="send_button" prop:text="Send" prop:role='["btn", "btn-primary", "ic-send"]'></anvil-component>
+              </div>
+              <div class="tp-name"><label anvil:dom-node="name_lbl">Writing as</label> <anvil-component type="TextBox" name="name_box"></anvil-component><span>· messages can't be deleted, so take a breath before sending.</span></div>
+            </section>
+            <aside class="tp-side">
+              <div class="ui-card">
+                <div class="ui-row between"><h3 class="card-h">Repairs &amp; requests</h3><anvil-component type="Button" name="ask_side" prop:text="Ask" prop:role='["btn", "btn-sm", "btn-primary", "ic-plus"]'></anvil-component></div>
+                <anvil-component type="RepeatingPanel" name="open_panel" prop:item_template="Good_Landlord.Items.TaskCard" prop:role='["tc-tasks"]'></anvil-component>
+                <p class="muted small tc-none" anvil:name="no_open">Nothing open. If something needs fixing, ask here: the date you asked is recorded.</p>
+                <details class="tc-closed" anvil:name="closed_box"><summary class="small muted" anvil:dom-node="closed_sum"></summary>
+                  <anvil-component type="RepeatingPanel" name="closed_panel" prop:item_template="Good_Landlord.Items.TaskCard" prop:role='["tc-tasks"]'></anvil-component></details>
+              </div>
+              <div class="ui-card">
+                <h3>Your lease</h3>
+                <dl class="tp-facts">
+                  <dt>Rent</dt><dd anvil:dom-node="f_rent"></dd>
+                  <dt>Due</dt><dd anvil:dom-node="f_due"></dd>
+                  <dt>Since</dt><dd anvil:dom-node="f_start"></dd>
+                  <dt anvil:dom-node="f_end_dt">Until</dt><dd anvil:dom-node="f_end"></dd>
+                  <dt anvil:dom-node="f_dep_dt">Deposit</dt><dd anvil:dom-node="f_dep"></dd>
+                  <dt>Address</dt><dd anvil:dom-node="f_addr"></dd>
+                </dl>
+                <div anvil:name="rec_box"><p class="small muted tp-rec-h">Rent your landlord recorded as received</p>
+                  <anvil-component type="RepeatingPanel" name="rec_panel" prop:item_template="Good_Landlord.Items.ReceiptRow" prop:role='["tp-rec"]'></anvil-component></div>
+              </div>
+              <div class="ui-card"><h3>Keep a copy</h3><p class="muted small">Download the whole record with its dates and seal, for your files or a rental board.</p>
+                <anvil-component type="Button" name="download_button" prop:text="Download the record" prop:role='["btn", "btn-sm", "ic-download"]'></anvil-component></div>
+            </aside>
+          </div>
+          <p class="tp-foot">This page is private to your home: keep the link to yourself.</p>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

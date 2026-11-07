@@ -1,0 +1,16 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]'></anvil-component>
+  <div class="gl-form-grid">
+    <div class="ui-field full"><div class="ui-seg" role="group" aria-label="Money in or out">
+      <button type="button" anvil:name="out_button" anvil:on-dom:click="self.out_click">Money out</button>
+      <button type="button" anvil:name="in_button" anvil:on-dom:click="self.in_click">Money in</button>
+    </div></div>
+    <label class="ui-field"><span>Property</span><anvil-component type="DropDown" name="prop_box"></anvil-component></label>
+    <label class="ui-field"><span>Category</span><anvil-component type="DropDown" name="cat_box"></anvil-component><anvil-component type="Label" name="cat_hint" prop:role='["hint"]'></anvil-component></label>
+    <label class="ui-field"><span>Amount</span><anvil-component type="TextBox" name="amount_box" prop:placeholder="0.00"></anvil-component></label>
+    <label class="ui-field"><span>Date</span><anvil-component type="TextBox" name="date_box"></anvil-component></label>
+    <label class="ui-field full"><span>What for <em>(optional)</em></span><anvil-component type="TextBox" name="memo_box"></anvil-component></label>
+  </div>
+  <anvil-component type="Label" name="error_label" prop:role='["msg-error", "full"]' prop:visible="false"></anvil-component>
+  <div class="ui-row end dlg-acts"><anvil-component type="Button" name="delete_button" prop:text="Delete" prop:role='["btn", "btn-danger", "ic-trash"]'></anvil-component><span class="ui-spacer"></span><anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component><anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component></div>
+</div>

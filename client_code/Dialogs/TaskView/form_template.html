@@ -1,0 +1,51 @@
+<div class="ui gl-dlg">
+  <div class="ui-row"><span anvil:dom-node="chip"></span><span class="small gl-prio-urgent" anvil:dom-node="urgent">Urgent</span><span class="small muted" anvil:dom-node="num"></span></div>
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title", "tv-title"]'></anvil-component>
+  <p class="muted small" anvil:dom-node="where"></p>
+  <p class="tv-details" anvil:dom-node="details"></p>
+  <div class="gl-steps"><span anvil:dom-node="s0">Requested</span><span anvil:dom-node="s1">Seen</span><span anvil:dom-node="s2">Scheduled</span><span anvil:dom-node="s3">In progress</span><span anvil:dom-node="s4">Done</span></div>
+  <dl class="gl-times">
+    <dt>Asked</dt><dd><span anvil:dom-node="t_asked"></span> <span class="muted small" anvil:dom-node="t_by"></span></dd>
+    <dt>Seen</dt><dd anvil:dom-node="t_seen"></dd>
+    <dt>Scheduled for</dt><dd anvil:dom-node="t_sched"></dd>
+    <dt>Work started</dt><dd anvil:dom-node="t_started"></dd>
+    <dt>Done</dt><dd><span anvil:dom-node="t_done"></span> <span class="muted small" anvil:dom-node="t_took"></span></dd>
+    <dt>Tenant confirmed</dt><dd anvil:dom-node="t_conf"></dd>
+    <dt anvil:dom-node="cost_dt">Cost</dt><dd anvil:dom-node="t_cost"></dd>
+  </dl>
+
+  <div class="ui-stack tv-moves" anvil:name="moves">
+    <h3>Move it along</h3>
+    <div class="gl-moves">
+      <anvil-component type="Button" name="m_acknowledged" prop:text="Seen it" prop:role='["btn", "btn-sm"]'></anvil-component>
+      <anvil-component type="Button" name="m_scheduled" prop:text="Schedule" prop:role='["btn", "btn-sm"]'></anvil-component>
+      <anvil-component type="Button" name="m_in_progress" prop:text="Working on it" prop:role='["btn", "btn-sm"]'></anvil-component>
+      <anvil-component type="Button" name="m_done" prop:text="Done" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component>
+      <anvil-component type="Button" name="m_declined" prop:text="Decline" prop:role='["btn", "btn-sm", "btn-danger"]'></anvil-component>
+      <anvil-component type="Button" name="m_requested" prop:text="Reopen" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+    </div>
+    <div class="gl-form-grid" anvil:name="extra">
+      <label class="ui-field" anvil:name="when_field"><span>Scheduled for</span><anvil-component type="TextBox" name="when_box"></anvil-component></label>
+      <label class="ui-field" anvil:name="cost_field"><span>What it cost <em>(optional)</em></span><anvil-component type="TextBox" name="cost_box"></anvil-component><span class="ui-hint">Goes into the ledger as a claimable repair.</span></label>
+      <label class="ui-field full"><span>Note for the record <em anvil:dom-node="note_req">(optional)</em></span><anvil-component type="TextArea" name="note_box" prop:placeholder="Who is coming, what was done…"></anvil-component></label>
+      <div class="full ui-row end">
+        <anvil-component type="Button" name="cancel_move" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component>
+        <anvil-component type="Button" name="go_move" prop:text="Save" prop:role='["btn", "btn-primary"]'></anvil-component>
+      </div>
+    </div>
+    <p class="ui-hint">Every move is written into the record with its date and can't be erased.</p>
+  </div>
+
+  <div class="ui-card flat tv-confirm" anvil:name="confirm_box">
+    <h3>Is it fixed?</h3>
+    <p class="muted small">Your answer goes into the record.</p>
+    <anvil-component type="TextArea" name="tnote_box" prop:placeholder="Anything to add (optional)"></anvil-component>
+    <div class="ui-row tv-confirm-acts">
+      <anvil-component type="Button" name="fixed_button" prop:text="Yes, it's fixed" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+      <anvil-component type="Button" name="notyet_button" prop:text="Not yet" prop:role='["btn"]'></anvil-component>
+    </div>
+  </div>
+  <div class="ui-row end dlg-acts">
+    <anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component>
+  </div>
+</div>

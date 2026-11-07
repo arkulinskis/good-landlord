@@ -1,0 +1,127 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-page-head"><div><h1>Deal check</h1><anvil-component type="Label" name="lead" prop:role='["muted", "dl-lead"]'></anvil-component></div></div>
+      <nav class="dl-chips" aria-label="Choose a property">
+        <anvil-component type="RepeatingPanel" name="chips_panel" prop:item_template="Good_Landlord.Items.DealChip" prop:role='["contents"]'></anvil-component>
+      </nav>
+
+      <div anvil:name="prop_part">
+        <div class="dl-grid">
+          <section class="ui-card dl-card">
+            <h2>If you sold today</h2><p class="muted small">What you'd walk away with, against everything you put in.</p>
+            <anvil-component type="Good_Landlord.Components.Slider" name="s_value" prop:label="Sale price"></anvil-component>
+            <anvil-component type="Good_Landlord.Components.Slider" name="s_sell" prop:label="Selling costs"></anvil-component>
+            <div class="dl-verdict" anvil:dom-node="verdict">
+              <anvil-component type="Good_Landlord.Components.House" name="verdict_house"></anvil-component>
+              <div><anvil-component type="Label" name="verdict_label" prop:role='["dl-verdict-t"]'></anvil-component><p anvil:dom-node="verdict_text"></p></div>
+            </div>
+            <div class="dl-big">
+              <div><span>You'd walk away with</span><b anvil:dom-node="t_proceeds"></b></div>
+              <div><span>Profit</span><b anvil:dom-node="t_profit"></b></div>
+              <div><span>Return on your money</span><b anvil:dom-node="t_roi"></b></div>
+              <div><span anvil:dom-node="t_annual_lbl"></span><b anvil:dom-node="t_annual"></b></div>
+            </div>
+            <h3 class="dl-h3">Where it comes from</h3>
+            <anvil-component type="RepeatingPanel" name="why_panel" prop:item_template="Good_Landlord.Items.WhyRow" prop:role='["dl-why"]'></anvil-component>
+            <p class="ui-hint" anvil:dom-node="gap"></p>
+            <div class="ui-row dl-keep"><anvil-component type="Button" name="keep_button" prop:text="Keep these estimates" prop:role='["btn", "btn-sm", "ic-check"]'></anvil-component></div>
+          </section>
+          <section class="ui-card dl-card">
+            <h2>If you keep it</h2><p class="muted small">Grow the value, pay down the mortgage, collect rent.</p>
+            <div class="dl-presets" role="group" aria-label="Market presets">
+              <anvil-component type="Button" name="p_fall" prop:text="Prices fall -1%" prop:role='["dl-preset"]'></anvil-component>
+              <anvil-component type="Button" name="p_cautious" prop:text="Cautious 2%" prop:role='["dl-preset"]'></anvil-component>
+              <anvil-component type="Button" name="p_typical" prop:text="Typical 3.5%" prop:role='["dl-preset"]'></anvil-component>
+              <anvil-component type="Button" name="p_hot" prop:text="Hot market 6%" prop:role='["dl-preset"]'></anvil-component>
+            </div>
+            <anvil-component type="Good_Landlord.Components.Slider" name="s_appr" prop:label="Value grows per year"></anvil-component>
+            <anvil-component type="Good_Landlord.Components.Slider" name="s_years" prop:label="Keep it for"></anvil-component>
+            <div class="gl-form-grid">
+              <anvil-component type="Good_Landlord.Components.Slider" name="s_rent" prop:label="Rent rises per year"></anvil-component>
+              <anvil-component type="Good_Landlord.Components.Slider" name="s_cost" prop:label="Costs rise per year"></anvil-component>
+            </div>
+            <div class="dl-big">
+              <div><span anvil:dom-node="f_value_lbl"></span><b anvil:dom-node="f_value"></b></div>
+              <div><span>Still owed</span><b anvil:dom-node="f_balance"></b></div>
+              <div><span>Profit if sold then</span><b anvil:dom-node="f_profit"></b></div>
+              <div><span>Per year overall</span><b anvil:dom-node="f_annual"></b></div>
+            </div>
+            <div class="dl-proj"><anvil-component type="Good_Landlord.Components.Chart" name="proj_chart"></anvil-component></div>
+            <h3 class="dl-h3">What if prices grow faster or slower?</h3>
+            <p class="muted small dl-sens-lead">Profit if you sell after <span anvil:dom-node="years2"></span>. Tap one to try it.</p>
+            <anvil-component type="RepeatingPanel" name="sens_panel" prop:item_template="Good_Landlord.Items.SensTile" prop:role='["dl-sens"]'></anvil-component>
+            <div class="dl-miles"><div class="dl-mile dl-mile-head"><span>After</span><span>Equity</span><span>Cash flow / yr</span><span>Profit if sold</span></div>
+              <anvil-component type="RepeatingPanel" name="miles_panel" prop:item_template="Good_Landlord.Items.MileRow"></anvil-component></div>
+          </section>
+        </div>
+
+        <section class="ui-card dl-card dl-mort" anvil:dom-node="mort_card">
+          <div anvil:name="no_mort"><h2>Mortgage</h2><p class="muted">No mortgage added for this property.</p>
+            <anvil-component type="Button" name="add_mort" prop:text="Add the mortgage" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component></div>
+          <div anvil:name="mort_part">
+            <div class="ui-row between"><anvil-component type="Label" name="mort_title" prop:role='["dl-mort-title"]'></anvil-component><anvil-component type="Button" name="edit_mort" prop:text="Edit" prop:role='["btn", "btn-sm", "ic-edit"]'></anvil-component></div>
+            <p class="muted small" anvil:dom-node="mort_desc"></p>
+            <dl>
+              <div><dt>Each payment</dt><dd anvil:dom-node="m_payment"></dd></div>
+              <div><dt>Per month</dt><dd anvil:dom-node="m_monthly"></dd></div>
+              <div><dt>Owed today</dt><dd anvil:dom-node="m_balance"></dd></div>
+              <div><dt>Interest paid so far</dt><dd anvil:dom-node="m_interest"></dd></div>
+              <div><dt>Principal paid so far</dt><dd anvil:dom-node="m_principal"></dd></div>
+              <div><dt anvil:dom-node="m_ren_lbl"></dt><dd anvil:dom-node="m_ren"></dd></div>
+            </dl>
+            <anvil-component type="Good_Landlord.Components.Chart" name="amort_chart"></anvil-component>
+            <div class="ui-card flat dl-renew" anvil:name="renew_box">
+              <h3>What if the rate changes at renewal?</h3>
+              <p class="muted small" anvil:dom-node="renew_lead"></p>
+              <anvil-component type="Good_Landlord.Components.Slider" name="s_renew" prop:label="Rate at renewal"></anvil-component>
+              <div class="dl-big">
+                <div><span>New payment per month</span><b anvil:dom-node="r_monthly"></b></div>
+                <div><span>Change</span><b anvil:dom-node="r_diff"></b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="ui-card dl-card dl-ratios-card">
+          <h2>Quick ratios</h2><p class="muted small">Rules of thumb investors use. None of them tells the whole story.</p>
+          <div class="dl-ratios">
+            <div><span class="small muted">Cap rate</span><b anvil:dom-node="r_cap"></b><p>Yearly rent minus costs (no mortgage), over the value. 4 to 6% is common in cities.</p></div>
+            <div><span class="small muted">Cash-on-cash</span><b anvil:dom-node="r_coc"></b><p>A year of cash flow over the money you put in.</p></div>
+            <div><span class="small muted">Rent to value</span><b anvil:dom-node="r_rtv"></b><p>Monthly rent over the value. The old "1% rule" is rare today.</p></div>
+          </div>
+        </section>
+      </div>
+
+      <div anvil:name="calc_part">
+        <div class="dl-grid">
+          <section class="ui-card dl-card dl-calc">
+            <h2>Mortgage and cash flow calculator</h2>
+            <div class="gl-form-grid">
+              <label class="ui-field"><span>Price</span><anvil-component type="TextBox" name="c_price"></anvil-component></label>
+              <label class="ui-field"><span>Down payment (%)</span><anvil-component type="TextBox" name="c_down"></anvil-component></label>
+              <label class="ui-field"><span>Interest rate (%)</span><anvil-component type="TextBox" name="c_rate"></anvil-component></label>
+              <label class="ui-field"><span>Amortisation (years)</span><anvil-component type="TextBox" name="c_amort"></anvil-component></label>
+              <label class="ui-field"><span>Monthly rent</span><anvil-component type="TextBox" name="c_rent"></anvil-component></label>
+              <label class="ui-field"><span>Monthly costs (tax, insurance, upkeep)</span><anvil-component type="TextBox" name="c_costs"></anvil-component></label>
+              <label class="ui-field"><span>Payments</span><anvil-component type="DropDown" name="c_freq"></anvil-component></label>
+              <label class="ui-field"><span>Compounding</span><anvil-component type="DropDown" name="c_comp"></anvil-component></label>
+            </div>
+          </section>
+          <section class="ui-card dl-card">
+            <h2>Result</h2>
+            <div class="dl-big">
+              <div><span>Each payment</span><b anvil:dom-node="c_payment"></b></div>
+              <div><span>Per month</span><b anvil:dom-node="c_monthly"></b></div>
+              <div><span>Cash flow per month</span><b anvil:dom-node="c_cash"></b></div>
+              <div><span>Total interest</span><b anvil:dom-node="c_interest"></b></div>
+              <div><span>Borrowed</span><b anvil:dom-node="c_loan"></b></div>
+              <div><span>Cash-on-cash</span><b anvil:dom-node="c_coc"></b></div>
+            </div>
+            <div class="dl-proj"><anvil-component type="Good_Landlord.Components.Chart" name="calc_chart"></anvil-component></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

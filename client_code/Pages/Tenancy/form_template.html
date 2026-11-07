@@ -1,0 +1,59 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <a href="#tenants" class="small gl-back"><i class="ic ic-back"></i>All tenants</a>
+      <div class="ui-empty" anvil:name="missing"><i class="ic ic-users"></i><h2>That record isn't here</h2><p anvil:dom-node="missing_text">It isn't yours, or it was deleted.</p><a class="ui-btn" href="#tenants">All tenants</a></div>
+      <div anvil:name="main_part">
+        <div class="tc-head">
+          <div><anvil-component type="Label" name="title" prop:role='["tc-title"]'></anvil-component><p class="muted tc-sub"><span anvil:dom-node="sub"></span> <span class="ui-badge" anvil:dom-node="ended">Ended</span></p></div>
+          <div class="ui-row">
+            <anvil-component type="Button" name="share_button" prop:text="Tenant's link" prop:role='["btn", "btn-primary", "ic-link"]'></anvil-component>
+            <anvil-component type="Button" name="download_button" prop:text="Download" prop:role='["btn", "ic-download"]'></anvil-component>
+          </div>
+        </div>
+        <div class="gl-seal" anvil:dom-node="seal"><i class="ic ic-seal" anvil:dom-node="seal_icon"></i><span class="gl-seal-t"><b anvil:dom-node="seal_head"></b> <span anvil:dom-node="seal_text"></span> <code anvil:dom-node="seal_code"></code></span>
+          <anvil-component type="Button" name="verify_button" prop:text="Check again" prop:role='["btn", "btn-sm", "btn-ghost", "ic-refresh"]'></anvil-component></div>
+        <div class="tc-grid">
+          <section class="ui-card">
+            <div class="tc-thread" anvil:dom-node="thread_box">
+              <anvil-component type="RepeatingPanel" name="thread_panel" prop:item_template="Good_Landlord.Items.ThreadEntry" prop:role='["gl-thread"]'></anvil-component>
+            </div>
+            <div class="gl-compose">
+              <anvil-component type="TextArea" name="compose_box"></anvil-component>
+              <anvil-component type="Button" name="send_button" prop:text="Send" prop:role='["btn", "btn-primary", "ic-send"]'></anvil-component>
+            </div>
+          </section>
+          <aside class="tc-side">
+            <div class="ui-card">
+              <div class="ui-row between"><h3 class="card-h">Requests</h3><anvil-component type="Button" name="new_task" prop:text="Task" prop:role='["btn", "btn-sm", "ic-plus"]'></anvil-component></div>
+              <anvil-component type="RepeatingPanel" name="open_panel" prop:item_template="Good_Landlord.Items.TaskCard" prop:role='["tc-tasks"]'></anvil-component>
+              <p class="muted small tc-none" anvil:name="no_open">No open requests.</p>
+              <details class="tc-closed" anvil:name="closed_box"><summary class="small muted" anvil:dom-node="closed_sum"></summary>
+                <anvil-component type="RepeatingPanel" name="closed_panel" prop:item_template="Good_Landlord.Items.TaskCard" prop:role='["tc-tasks"]'></anvil-component></details>
+            </div>
+            <div class="ui-card">
+              <h3>Lease</h3>
+              <dl class="tc-facts">
+                <dt>Rent</dt><dd anvil:dom-node="f_rent"></dd>
+                <dt>Due</dt><dd anvil:dom-node="f_due"></dd>
+                <dt>Started</dt><dd anvil:dom-node="f_start"></dd>
+                <dt>Ends</dt><dd anvil:dom-node="f_end"></dd>
+                <dt anvil:dom-node="f_dep_dt">Deposit held</dt><dd anvil:dom-node="f_dep"></dd>
+                <dt anvil:dom-node="f_email_dt">Email</dt><dd class="tc-email" anvil:dom-node="f_email"></dd>
+                <dt>Tenant's last visit</dt><dd anvil:dom-node="f_visit"></dd>
+              </dl>
+              <div anvil:name="rent_box"><p class="small muted tc-rent-h">Rent received</p>
+                <anvil-component type="RepeatingPanel" name="rent_panel" prop:item_template="Good_Landlord.Items.RentChip" prop:role='["tc-rent"]'></anvil-component></div>
+              <div class="ui-row tc-acts">
+                <anvil-component type="Button" name="edit_button" prop:text="Edit" prop:role='["btn", "btn-sm", "ic-edit"]'></anvil-component>
+                <anvil-component type="Button" name="end_button" prop:text="End tenancy" prop:role='["btn", "btn-sm", "ic-key"]'></anvil-component>
+                <anvil-component type="Button" name="reopen_button" prop:text="Reopen" prop:role='["btn", "btn-sm"]'></anvil-component>
+                <anvil-component type="Button" name="delete_button" prop:text="Delete" prop:role='["btn", "btn-sm", "btn-danger", "ic-trash"]'></anvil-component>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

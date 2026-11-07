@@ -1,0 +1,17 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]'></anvil-component>
+  <p class="muted" anvil:name="lead">This opens a permanent record for you and your tenant, with a private link you can send them.</p>
+  <div class="gl-form-grid">
+    <label class="ui-field" anvil:name="prop_field"><span>Property</span><anvil-component type="DropDown" name="prop_box"></anvil-component></label>
+    <label class="ui-field" anvil:name="unit_field"><span>Unit <em>(optional)</em></span><anvil-component type="TextBox" name="unit_box" prop:placeholder="Upstairs, #2…"></anvil-component></label>
+    <label class="ui-field full"><span>Tenant name(s)</span><anvil-component type="TextBox" name="name_box"></anvil-component></label>
+    <label class="ui-field full"><span>Tenant email <em>(optional, only you see it)</em></span><anvil-component type="TextBox" name="email_box"></anvil-component></label>
+    <label class="ui-field"><span>Monthly rent</span><anvil-component type="TextBox" name="rent_box"></anvil-component></label>
+    <label class="ui-field"><span>Due on day</span><anvil-component type="TextBox" name="due_box"></anvil-component><span class="ui-hint">1 to 28</span></label>
+    <label class="ui-field"><span>Lease starts</span><anvil-component type="TextBox" name="start_box"></anvil-component></label>
+    <label class="ui-field"><span>Lease ends <em>(optional)</em></span><anvil-component type="TextBox" name="end_box"></anvil-component></label>
+    <label class="ui-field full"><span>Deposit held <em>(optional)</em></span><anvil-component type="TextBox" name="deposit_box"></anvil-component></label>
+  </div>
+  <anvil-component type="Label" name="error_label" prop:role='["msg-error", "full"]' prop:visible="false"></anvil-component>
+  <div class="ui-row end dlg-acts"><anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component><anvil-component type="Button" name="save_button" prop:text="Open the record" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component></div>
+</div>

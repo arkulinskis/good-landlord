@@ -1,0 +1,19 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]'></anvil-component>
+  <p class="muted">No account needed: whoever has this link can read and write in this record, so send it only to your tenant.</p>
+  <div class="gl-link">
+    <anvil-component type="TextBox" name="link_box"></anvil-component>
+    <anvil-component type="Button" name="copy_link" prop:text="Copy" prop:role='["btn", "btn-primary", "ic-copy"]'></anvil-component>
+  </div>
+  <label class="ui-field gl-share-msg"><span>A message you can paste into a text or email</span><anvil-component type="TextArea" name="msg_box"></anvil-component></label>
+  <div class="ui-row gl-share-acts">
+    <anvil-component type="Button" name="copy_msg" prop:text="Copy message" prop:role='["btn", "btn-sm", "ic-copy"]'></anvil-component>
+    <a class="ui-btn sm" href="#" anvil:name="mail_link" anvil:dom-node="mail"><i class="ic ic-mail"></i>Email it</a>
+    <span class="ui-spacer"></span>
+    <anvil-component type="Button" name="reset_button" prop:text="Make a new link" prop:role='["btn", "btn-sm", "btn-danger", "ic-refresh"]'></anvil-component>
+  </div>
+  <p class="ui-hint">Making a new link stops the old one working (handy if it was shared by mistake). The record itself stays.</p>
+  <div class="ui-row end dlg-acts">
+    <anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component>
+  </div>
+</div>

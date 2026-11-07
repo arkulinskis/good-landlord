@@ -1,0 +1,15 @@
+<div class="pp-mort-w">
+  <dl>
+    <dt>Lender</dt><dd anvil:dom-node="lender"></dd>
+    <dt>Rate</dt><dd anvil:dom-node="rate"></dd>
+    <dt>Payment</dt><dd><span anvil:dom-node="payment"></span> <span class="muted small" anvil:dom-node="freq"></span></dd>
+    <dt>Owed today</dt><dd anvil:dom-node="balance"></dd>
+    <dt>Interest this year</dt><dd><span anvil:dom-node="interest"></span> <span class="muted small">claimable</span></dd>
+    <dt>Renews</dt><dd anvil:dom-node="renews"></dd>
+    <dt>Paid off</dt><dd anvil:dom-node="payoff"></dd>
+  </dl>
+  <div class="ui-row pp-mort-acts">
+    <anvil-component type="Button" name="edit_button" prop:text="Edit" prop:role='["btn", "btn-sm", "ic-edit"]'></anvil-component>
+    <a class="ui-btn sm ghost" href="#deal" anvil:dom-node="calc">Calculator <i class="ic ic-arrow"></i></a>
+  </div>
+</div>

@@ -144,10 +144,10 @@ def build_portfolio(owner, owner_name, tokens=None):
     today = now.date()
     props = {}
     for d in PROPERTIES:
-        f = {k: v for k, v in d.items() if k not in ("key", "bought_days")}
+        f: dict = {k: v for k, v in d.items() if k not in ("key", "bought_days")}
         props[d["key"]] = app_tables.properties.add_row(
-            owner=owner, purchase_date=today - dt.timedelta(days=d["bought_days"]), value_date=today - dt.timedelta(days=40),
-            archived=False, created=now - dt.timedelta(days=d["bought_days"]), is_demo=True, **f)
+            owner=owner, purchase_date=today - dt.timedelta(days=float(d["bought_days"])), value_date=today - dt.timedelta(days=40),
+            archived=False, created=now - dt.timedelta(days=float(d["bought_days"])), is_demo=True, **f)
     for key, (lender, share, rate, amort, term, after) in MORTGAGES.items():
         p = props[key]
         app_tables.mortgages.add_row(owner=owner, property=p, lender=lender, amount=float(round(p["purchase_price"] * share)),

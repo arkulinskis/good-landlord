@@ -1,0 +1,102 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="lp">
+      <section class="lp-hero">
+        <div class="ui-wrap">
+          <div class="lp-pitch">
+            <h1>Know your numbers. <em>Keep your word.</em></h1>
+            <p class="lp-lead">For landlords who want to be good ones: track rent and every claimable expense, see your cash flow and what you'd really make if you sold, and give each tenant a private page where every message and repair request is dated and kept for good.</p>
+            <div class="lp-cta">
+              <span class="lp-cta-set" anvil:name="guest_cta"><a class="ui-btn primary lg" href="#auth/signup">Start free <i class="ic ic-arrow"></i></a><a class="ui-btn lg" href="#auth">I have an account</a></span>
+              <span class="lp-cta-set" anvil:name="member_cta"><a class="ui-btn primary lg" href="#home">Open the app <i class="ic ic-arrow"></i></a></span>
+              <a class="ui-btn lg ghost" href="#t/demo-upstairs"><i class="ic ic-key"></i>See the tenant side</a>
+            </div>
+            <div class="lp-proof"><span><i class="ic ic-check"></i>Free to use</span><span><i class="ic ic-check"></i>Tenants need no account</span><span><i class="ic ic-check"></i>Records nobody can delete</span></div>
+          </div>
+          <div class="lp-ba" anvil:dom-node="ba">
+            <div class="side lp-mess" aria-hidden="true"><span class="ring"></span>
+              <div class="p rc m1"><b>HOME HARDWARE</b>Faucet cartridge 18.49<br>Plumber tape 3.99<br>TOTAL 25.15<br>Oct 2?</div>
+              <div class="p rc m2 hide-s"><b>Insurance?</b>Policy 88-221<br>renews ???<br>$1,140 / yr</div>
+              <div class="p st m3">Upstairs paid?? cash or e-transfer? ask</div>
+              <div class="p st pk m4 hide-s">Property tax due… March? April?</div>
+              <div class="sms m5"><small>Tenant · 11:42 PM</small>the kitchen tap is dripping again??</div>
+              <div class="sms m6 hide-s"><small>Tenant · 3 weeks later</small>did you get my text about the tap</div>
+              <span class="q">?</span>
+            </div>
+            <div class="side lp-app" aria-hidden="true">
+              <div class="scene"><span class="sun"></span><div class="lp-house"><anvil-component type="Good_Landlord.Components.House" name="hero_house" prop:door="red" prop:kind="duplex" prop:glow="0.95" prop:smoke="true"></anvil-component></div><span class="gnd"></span></div>
+              <div class="tag t1"><span class="muted">Cash flow this month</span><b class="gl-pos">+$612</b></div>
+              <div class="tag t2"><div class="row"><span class="gl-status gl-st-done">Done</span><span class="small faint">#4</span></div><b class="t2-t">Kitchen tap drips</b><span class="muted">Asked Monday · fixed Wednesday · $25.15 claimed</span></div>
+              <div class="tag t3"><i class="ic ic-seal"></i>Sealed record · 38 entries</div>
+            </div>
+            <span class="lbl l" aria-hidden="true">The shoebox</span><span class="lbl r" aria-hidden="true">Good Landlord</span>
+            <input type="range" min="0" max="100" value="50" anvil:dom-node="ba_range" aria-label="Drag to compare the shoebox with the same rental in Good Landlord"><span class="handle"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section ytf" id="watch">
+        <div class="ui-wrap">
+          <div class="ytf-in">
+            <div class="ytf-copy">
+              <h2>See Good Landlord in about a minute</h2>
+              <p>A short video tour of what Good Landlord does and how it works.</p>
+              <a class="ytf-link" href="https://www.youtube.com/watch?v=qv8jRRY0KG0" target="_blank" rel="noopener"><svg viewBox="0 0 28 20" width="20" height="14" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#FF0033"/><path d="M11.2 5.8v8.4l7.3-4.2z" fill="#fff"/></svg>Watch on YouTube &#8599;</a>
+            </div>
+            <div>
+              <div class="ytf-frame" anvil:dom-node="yt_frame">
+                <button type="button" class="ytf-cover" anvil:dom-node="yt_cover" aria-label="Play the Good Landlord video (1:16)">
+                  <img src="_/theme/yt-cover.jpg" alt="" loading="lazy" decoding="async" width="960" height="540">
+                  <span class="ytf-play" aria-hidden="true"><svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.3.3 34 .3 34 .3s-21.3 0-26.5 1.4a8.5 8.5 0 0 0-6 6C.1 13 .1 24 .1 24s0 11 1.4 16.3a8.5 8.5 0 0 0 6 6c5.2 1.4 26.5 1.4 26.5 1.4s21.3 0 26.5-1.4a8.5 8.5 0 0 0 6-6C67.9 35 67.9 24 67.9 24s0-11-1.4-16.3z" fill="#FF0033"/><path d="M45 24 27 14v20z" fill="#fff"/></svg></span>
+                  <span class="ytf-len">1:16</span>
+                </button>
+              </div>
+              <p class="ytf-note">The video loads from YouTube when you press play.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Good for both sides of the door</h2><p>One place for the numbers only you see, and one fair record you share.</p></div>
+          <div class="lp-two">
+            <div class="ui-card"><h3><span class="who">For you, the landlord:</span> your rentals, in plain numbers</h3><ul><li><i class="ic ic-check"></i>Rent roll: who paid, who's late, one tap to record it</li><li><i class="ic ic-check"></i>Every expense sorted into claimable categories</li><li><i class="ic ic-check"></i>Cash flow per property, after the mortgage</li><li><i class="ic ic-check"></i>Profit if you sold today, and in 5, 10 or 20 years</li><li><i class="ic ic-check"></i>Alerts for new requests, unread messages and renewals</li></ul></div>
+            <div class="ui-card"><h3><span class="who">For your tenants:</span> a fair, permanent record</h3><ul><li><i class="ic ic-check"></i>A private page, no account or app needed</li><li><i class="ic ic-check"></i>Messages that can't be edited or deleted, by anyone</li><li><i class="ic ic-check"></i>Repair requests with the date asked and the date fixed</li><li><i class="ic ic-check"></i>Rent receipts and the lease details in one place</li><li><i class="ic ic-check"></i>Download the whole record any time</li></ul>
+              <a class="ui-btn lp-demo" href="#t/demo-upstairs"><i class="ic ic-key"></i>Open the tenant demo</a></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section" id="how">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>How it works</h2><p>Ten minutes to set up, then a few taps a month.</p></div>
+          <ol class="lp-steps"><li class="ui-card lp-step"><h3>Add your rentals</h3><p class="muted">Purchase price, mortgage, today's value. Good Landlord works out payments, interest and equity for you.</p></li><li class="ui-card lp-step"><h3>Record money in and out</h3><p class="muted">Mark rent paid in one tap; file each expense under a tax category so the year-end summary writes itself.</p></li><li class="ui-card lp-step"><h3>Send each tenant their link</h3><p class="muted">They write and ask for repairs there. You move requests along; every date is on record for both of you.</p></li></ol>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Everything a small landlord needs</h2></div>
+          <div class="lp-feats"><div class="lp-feature"><i class="ic ic-coins"></i><div><h3>Claimable expenses</h3><p>Categories that follow the rental tax forms (T776, Schedule E), with mortgage interest worked out for you.</p></div></div><div class="lp-feature"><i class="ic ic-chart"></i><div><h3>Deal check</h3><p>Slide the price, appreciation and years you keep it, and watch profit, equity and your yearly return change.</p></div></div><div class="lp-feature"><i class="ic ic-percent"></i><div><h3>Mortgage calculator</h3><p>Canadian or US compounding, any payment schedule, and a "rate at renewal" slider before your term ends.</p></div></div><div class="lp-feature"><i class="ic ic-seal"></i><div><h3>A record nobody can rewrite</h3><p>Messages are never edited or deleted, and each entry is sealed with a fingerprint of the one before it.</p></div></div><div class="lp-feature"><i class="ic ic-wrench"></i><div><h3>Repairs with dates</h3><p>Requested, seen, scheduled, done, confirmed: each step dated. Costs go straight into your ledger.</p></div></div><div class="lp-feature"><i class="ic ic-heart"></i><div><h3>Badges tenants can see</h3><p>Reply fast and fix things quickly, and your tenants see it: "usually replies in 3 hours".</p></div></div></div>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Questions</h2></div>
+          <div class="lp-faq"><details><summary>Is it free?</summary><p>Yes. Good Landlord is free to use, with no ads.</p></details><details><summary>Does my tenant need to sign up?</summary><p>No. You send them a private link. Whoever has the link can read and write in that tenancy's record, so send it only to your tenant. You can make a new link at any time, which stops the old one.</p></details><details><summary>Can anyone delete or change a message?</summary><p>No. There's no edit or delete button for anyone, landlord included. Each entry is sealed with a SHA-256 fingerprint of its text, its time and the entry before it, so a change made behind the scenes would show up as a broken seal. Both sides can download the whole record.</p></details><details><summary>Is this tax advice?</summary><p>No. It sorts what you record into the usual rental-income lines so you (or your accountant) can fill the forms faster. Rules differ by country and situation.</p></details><details><summary>What does my tenant see?</summary><p>Their own lease (rent, due day, deposit), the messages and requests, the rent you recorded as received, and your response badges. Never your other properties, costs or numbers.</p></details><details><summary>Can I try it first?</summary><p>Yes. Open the tenant demo below without an account, or sign up and load the sample portfolio: three fictional rentals with tenants, rent, repairs and a mortgage renewal coming up.</p></details></div>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-band">
+            <div><h2>Be the landlord you'd want to rent from.</h2><p>Free, private, and ready in minutes.</p></div>
+            <a class="ui-btn lg" href="#auth/signup" anvil:dom-node="band_cta">Start free</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </anvil-block>
+</anvil-form>

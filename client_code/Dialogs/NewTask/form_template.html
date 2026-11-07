@@ -1,0 +1,12 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]'></anvil-component>
+  <anvil-component type="Label" name="lead_label" prop:role='["muted"]'></anvil-component>
+  <div class="gl-form-grid">
+    <label class="ui-field full"><span>What needs doing?</span><anvil-component type="TextBox" name="title_box" prop:placeholder="The kitchen tap drips"></anvil-component></label>
+    <label class="ui-field full"><span>Details <em>(optional)</em></span><anvil-component type="TextArea" name="details_box" prop:placeholder="Where, since when, what you tried"></anvil-component></label>
+    <label class="ui-field"><span>Type</span><anvil-component type="DropDown" name="cat_box"></anvil-component></label>
+    <label class="ui-field"><span>How urgent?</span><anvil-component type="DropDown" name="prio_box"></anvil-component></label>
+  </div>
+  <anvil-component type="Label" name="error_label" prop:role='["msg-error", "full"]' prop:visible="false"></anvil-component>
+  <div class="ui-row end dlg-acts"><anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component><anvil-component type="Button" name="save_button" prop:text="Send request" prop:role='["btn", "btn-primary", "ic-send"]'></anvil-component></div>
+</div>

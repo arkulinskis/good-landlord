@@ -1,0 +1,28 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-page-head">
+        <div><h1>Tenants</h1><p class="muted">Every conversation and request, kept for good and sealed against changes.</p></div>
+        <anvil-component type="Button" name="add_tenant" prop:text="Add tenant" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+      </div>
+      <nav class="ui-tabs">
+        <a href="#tenants" anvil:name="tab_list"><i class="ic ic-users"></i>Tenancies <span class="count" anvil:dom-node="unread"></span></a>
+        <a href="#tenants/requests" anvil:name="tab_requests"><i class="ic ic-wrench"></i>Requests <span class="count" anvil:dom-node="open"></span></a>
+      </nav>
+      <div anvil:name="list_part">
+        <anvil-component type="RepeatingPanel" name="groups_panel" prop:item_template="Good_Landlord.Items.TenantGroup"></anvil-component>
+        <div class="ui-empty" anvil:name="no_tenants"><i class="ic ic-users"></i><h2>No tenants yet</h2><p>Add a tenant to open a shared, permanent record and get their private link.</p>
+          <anvil-component type="Button" name="add_tenant_empty" prop:text="Add a tenant" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+          <a class="ui-btn primary" href="#home" anvil:name="first_prop">Add a property first</a></div>
+      </div>
+      <div anvil:name="requests_part">
+        <div class="tn-stats">
+          <anvil-component type="RepeatingPanel" name="badges_panel" prop:item_template="Good_Landlord.Items.BadgeRow" prop:role='["contents"]'></anvil-component>
+          <span class="muted small" anvil:name="no_badges">Your response badges appear once tenants send requests.</span>
+        </div>
+        <anvil-component type="RepeatingPanel" name="board_panel" prop:item_template="Good_Landlord.Items.BoardCol" prop:role='["tn-board"]'></anvil-component>
+        <p class="ui-hint">Tap a request to move it along. Every move is written into that tenant's record with the date.</p>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

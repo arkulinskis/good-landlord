@@ -1,0 +1,21 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]'></anvil-component>
+  <div class="gl-form-grid">
+    <label class="ui-field full"><span>Name</span><anvil-component type="TextBox" name="name_box" prop:placeholder="Maple Street Duplex"></anvil-component></label>
+    <label class="ui-field full"><span>Address <em>(optional)</em></span><anvil-component type="TextBox" name="address_box"></anvil-component></label>
+    <label class="ui-field"><span>Type</span><anvil-component type="DropDown" name="kind_box"></anvil-component></label>
+    <label class="ui-field"><span>Units</span><anvil-component type="TextBox" name="units_box"></anvil-component></label>
+    <label class="ui-field"><span>Purchase price</span><anvil-component type="TextBox" name="price_box" prop:placeholder="500000"></anvil-component></label>
+    <label class="ui-field"><span>Bought on</span><anvil-component type="TextBox" name="date_box"></anvil-component></label>
+    <label class="ui-field"><span>Down payment</span><anvil-component type="TextBox" name="down_box"></anvil-component><span class="ui-hint">Cash you put in at purchase.</span></label>
+    <label class="ui-field"><span>Closing costs</span><anvil-component type="TextBox" name="closing_box"></anvil-component><span class="ui-hint">Transfer tax, notary or lawyer, inspection.</span></label>
+    <label class="ui-field"><span>Improvements since</span><anvil-component type="TextBox" name="impr_box"></anvil-component><span class="ui-hint">Renovations not already in your ledger as capital.</span></label>
+    <label class="ui-field"><span>What it's worth today</span><anvil-component type="TextBox" name="value_box"></anvil-component><span class="ui-hint">Your best estimate. Tune it on the Deal check page.</span></label>
+    <label class="ui-field"><span>Expected growth per year</span><anvil-component type="TextBox" name="appr_box" prop:placeholder="3"></anvil-component><span class="ui-hint">In %, used for long-term projections.</span></label>
+    <label class="ui-field"><span>Selling costs</span><anvil-component type="TextBox" name="sell_box" prop:placeholder="5"></anvil-component><span class="ui-hint">In % of the price: agent, legal, moving.</span></label>
+    <div class="ui-field full"><span>Door colour</span><div class="gl-doors" role="radiogroup" aria-label="Door colour"><label title="red"><input type="radio" name="gl-door" value="red" anvil:dom-node="door_red"><span style="background:#b4502a"></span><b class="ui-sr">Red door</b></label><label title="honey"><input type="radio" name="gl-door" value="honey" anvil:dom-node="door_honey"><span style="background:#e19a35"></span><b class="ui-sr">Honey door</b></label><label title="sage"><input type="radio" name="gl-door" value="sage" anvil:dom-node="door_sage"><span style="background:#6f8f58"></span><b class="ui-sr">Sage door</b></label><label title="blue"><input type="radio" name="gl-door" value="blue" anvil:dom-node="door_blue"><span style="background:#3f6f98"></span><b class="ui-sr">Blue door</b></label><label title="plum"><input type="radio" name="gl-door" value="plum" anvil:dom-node="door_plum"><span style="background:#7d4a6a"></span><b class="ui-sr">Plum door</b></label><label title="walnut"><input type="radio" name="gl-door" value="walnut" anvil:dom-node="door_walnut"><span style="background:#6b4a33"></span><b class="ui-sr">Walnut door</b></label></div></div>
+    <label class="ui-field full"><span>Notes <em>(only you see these)</em></span><anvil-component type="TextArea" name="notes_box"></anvil-component></label>
+    <anvil-component type="Label" name="error_label" prop:role='["msg-error", "full"]' prop:visible="false"></anvil-component>
+  </div>
+  <div class="ui-row end dlg-acts"><anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component><anvil-component type="Button" name="save_button" prop:text="Add property" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component></div>
+</div>

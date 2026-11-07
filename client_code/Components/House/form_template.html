@@ -1,0 +1,32 @@
+---
+custom_component: true
+properties:
+  - name: door
+    type: string
+    default_value: "red"
+    description: Door colour (red, honey, sage, blue, plum, walnut)
+    default_binding_prop: true
+  - name: kind
+    type: string
+    default_value: "house"
+    description: house, duplex, triplex, condo, apartment, townhouse, cottage or other
+  - name: glow
+    type: number
+    default_value: 0.8
+    description: How brightly the windows glow, 0 to 1 (tied to cash flow)
+  - name: smoke
+    type: boolean
+    default_value: false
+    description: Chimney smoke (when the property makes money)
+  - name: size
+    type: number
+    default_value: 120
+    description: Width in pixels (CSS may override it)
+toolbox_item:
+  title: House
+  group: Good Landlord
+help_text: |
+  The SVG house drawn by the engine (GL.house in theme/assets/gl.js) with the door colour per property, windows that
+  glow with cash flow and chimney smoke. Decorative (aria-hidden).
+---
+<div class="gl-house-host"><span class="gl-house-box" anvil:dom-node="box"></span></div>
