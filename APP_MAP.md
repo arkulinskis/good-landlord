@@ -7,7 +7,7 @@ around them with an offset instead of whole files.
 
 **What it is:** Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs.
 **Live:** https://good-landlord.anvil.app · **Repo:** github.com/arkulinskis/good-landlord · **Layout:** native Anvil Forms · **Deploy:** master
-**Guide** (workflow, design rules, product knowledge): `good-landlord/.claude/skills/goodlandlord/SKILL.md`
+**Guide** (workflow, design rules, product knowledge): `.claude/skills/goodlandlord/SKILL.md`
 
 ## How to change it
 
