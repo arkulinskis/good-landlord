@@ -134,7 +134,7 @@ class Tenancy(TenancyTemplate):
         self.compose_box.text = draft
 
     def _keys(self, event):
-        if event.key == "Enter" and (event.ctrlKey or event.metaKey):
+        if getattr(event, "key", None) == "Enter" and (getattr(event, "ctrlKey", False) or getattr(event, "metaKey", False)):
             event.preventDefault()
             self.send_button_click()
 
