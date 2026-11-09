@@ -675,10 +675,9 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident
-    record of messages and repairs.
-  logo_img: asset:icon-512.png
-  title: 'Good Landlord: rental numbers and fair tenant records'
+  description: "Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs."
+  logo_img: "asset:icon-512.png"
+  title: "Good Landlord: rental numbers and fair tenant records"
 name: Good Landlord
 native_deps:
   head_html: |
@@ -702,7 +701,7 @@ native_deps:
     <meta name="twitter:description" content="Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs.">
     <meta name="twitter:image" content="https://good-landlord.anvil.app/_/theme/og-image.png">
     <link rel="alternate" type="text/plain" title="Good Landlord for AI assistants" href="https://good-landlord.anvil.app/llms.txt">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://good-landlord.anvil.app/#app", "name": "Good Landlord", "url": "https://good-landlord.anvil.app/", "description": "Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs.", "image": "https://good-landlord.anvil.app/_/theme/og-image.png", "inLanguage": "en", "publisher": {"@id": "https://arkvital.com/#org"}, "keywords": "landlord app, rental property tracker, rent tracking, landlord expense tracker, rental cash flow calculator, tenant repair requests, small landlord software, rental property profit, tenant communication log", "applicationCategory": "FinanceApplication", "operatingSystem": "Any (web browser)", "browserRequirements": "Requires JavaScript and a modern web browser", "featureList": ["Rent collected against expected, and every claimable expense", "Cash flow, mortgage, equity and profit if sold now or later", "Reminders for unrecorded rent, mortgage renewals and scheduled work", "A private link for each tenant: messages and repair requests", "A tamper-evident record nobody can edit or delete", "A sample portfolio to explore"], "audience": {"@type": "Audience", "audienceType": "Small landlords who want to know their numbers and treat tenants fairly"}}, {"@type": "WebSite", "@id": "https://good-landlord.anvil.app/#site", "url": "https://good-landlord.anvil.app/", "name": "Good Landlord", "publisher": {"@id": "https://arkvital.com/#org"}}, {"@type": "Organization", "@id": "https://arkvital.com/#org", "name": "Arkvital", "url": "https://arkvital.com", "email": "arkvital@outlook.com", "address": {"@type": "PostalAddress", "addressLocality": "Montreal", "addressRegion": "QC", "addressCountry": "CA"}}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://good-landlord.anvil.app/#app", "name": "Good Landlord", "url": "https://good-landlord.anvil.app/", "description": "Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs.", "image": "https://good-landlord.anvil.app/_/theme/og-image.png", "serviceType": "Know your rental numbers. Treat tenants fairly.", "provider": {"@id": "https://arkvital.com/#org"}, "areaServed": "Worldwide", "availableChannel": {"@type": "ServiceChannel", "serviceUrl": "https://good-landlord.anvil.app/", "name": "Web browser"}, "availableLanguage": "en", "audience": {"@type": "Audience", "audienceType": "Small landlords who want to know their numbers and treat tenants fairly"}}, {"@type": "WebSite", "@id": "https://good-landlord.anvil.app/#site", "url": "https://good-landlord.anvil.app/", "name": "Good Landlord", "publisher": {"@id": "https://arkvital.com/#org"}}, {"@type": "Organization", "@id": "https://arkvital.com/#org", "name": "Arkvital", "url": "https://arkvital.com", "email": "arkvital@outlook.com", "address": {"@type": "PostalAddress", "addressLocality": "Montreal", "addressRegion": "QC", "addressCountry": "CA"}}]}</script>
     <!-- seo:end -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#fbf4ea">
