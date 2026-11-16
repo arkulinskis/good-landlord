@@ -53,7 +53,7 @@ repair (type, urgency), request list with dates, lease facts and rent receipts, 
 author kind | author name | body | event | task number); `Record.verify` recomputes the chain. Only Admin -> Demo data
 removes demo rows, and an unused tenancy (opening entry only, never visited) can be deleted.
 
-**For admins** (`#admin`; arkulinskis@gmail.com becomes an admin on first sign-in):
+**For admins** (`#admin`; your admin email (App Secret `admin_emails`) becomes an admin on first sign-in):
 - **Feedback inbox:** New / Read / Done, private notes.
 - **Users:** search, make admin, disable an account.
 - **Overview:** landlords, properties, tenancy records and entries (counts only; admins don't read records).
@@ -64,7 +64,7 @@ removes demo rows, and an unused tenancy (opening entry only, never visited) can
 1. In the Anvil editor: **Create app → Clone from GitHub**, and paste `https://github.com/arkulinskis/good-landlord`.
 2. **Users** service: email + password and "Continue with Google", sign-up allowed (already set in `anvil.yaml`; check it).
 3. Open the app in the editor. If it shows a **Schema Mismatch** alert, choose **"The schema of the source code is correct"** so Anvil creates the tables.
-4. **Run** it and sign up with **arkulinskis@gmail.com** straight away (that account becomes the admin).
+4. **Run** it and sign up with **your admin email** (App Secret `admin_emails`) straight away (that account becomes the admin).
 5. **Publish** (Publish → public URL, or your own domain).
 
 <!-- libraries:start -->
