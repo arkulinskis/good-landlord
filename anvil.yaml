@@ -3,14 +3,10 @@ db_schema:
   app_settings:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: key
       type: string
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: value
       type: simpleObject
     indexes: []
@@ -19,44 +15,28 @@ db_schema:
   error_log:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: when
       type: datetime
-    - admin_ui:
-        order: 1
-        width: 120
+    - admin_ui: {order: 1, width: 120}
       name: source
       type: string
-    - admin_ui:
-        order: 2
-        width: 160
+    - admin_ui: {order: 2, width: 160}
       name: kind
       type: string
-    - admin_ui:
-        order: 3
-        width: 300
+    - admin_ui: {order: 3, width: 300}
       name: message
       type: string
-    - admin_ui:
-        order: 4
-        width: 300
+    - admin_ui: {order: 4, width: 300}
       name: traceback
       type: string
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: page
       type: string
-    - admin_ui:
-        order: 6
-        width: 120
+    - admin_ui: {order: 6, width: 120}
       name: session
       type: string
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: user
       target: users
       type: link_single
@@ -66,50 +46,32 @@ db_schema:
   feedback:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: user
       target: users
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: name
       type: string
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: email
       type: string
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: kind
       type: string
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: message
       type: string
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: context
       type: simpleObject
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: status
       type: string
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: note
       type: string
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: created
       type: datetime
     indexes: []
@@ -118,68 +80,44 @@ db_schema:
   ledger:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: owner
       target: users
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: property
       target: properties
       type: link_single
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: tenancy
       target: tenancies
       type: link_single
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: task
       target: tasks
       type: link_single
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: kind
       type: string
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: category
       type: string
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: amount
       type: number
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: date
       type: date
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: memo
       type: string
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       name: rent_month
       type: string
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       name: created
       type: datetime
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       name: is_demo
       type: bool
     indexes: []
@@ -188,66 +126,42 @@ db_schema:
   messages:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: tenancy
       target: tenancies
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: seq
       type: number
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: kind
       type: string
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: author_kind
       type: string
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: author_name
       type: string
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: body
       type: string
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: task
       target: tasks
       type: link_single
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: event
       type: string
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: created
       type: datetime
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       name: prev_hash
       type: string
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       name: hash
       type: string
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       name: is_demo
       type: bool
     indexes: []
@@ -256,66 +170,42 @@ db_schema:
   mortgages:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: owner
       target: users
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: property
       target: properties
       type: link_single
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: lender
       type: string
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: amount
       type: number
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: rate
       type: number
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: amort_years
       type: number
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: term_years
       type: number
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: start_date
       type: date
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: frequency
       type: string
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       name: compounding
       type: string
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       name: created
       type: datetime
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       name: is_demo
       type: bool
     indexes: []
@@ -324,83 +214,53 @@ db_schema:
   photos:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: owner
       target: users
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: tenancy
       target: tenancies
       type: link_single
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: task
       target: tasks
       type: link_single
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: message
       target: messages
       type: link_single
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: key
       type: string
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: sha256
       type: string
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: content_type
       type: string
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: size
       type: number
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: width
       type: number
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       name: height
       type: number
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       name: author_kind
       type: string
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       name: author_name
       type: string
-    - admin_ui:
-        order: 12
-        width: 200
+    - admin_ui: {order: 12, width: 200}
       name: status
       type: string
-    - admin_ui:
-        order: 13
-        width: 200
+    - admin_ui: {order: 13, width: 200}
       name: created
       type: datetime
-    - admin_ui:
-        order: 14
-        width: 200
+    - admin_ui: {order: 14, width: 200}
       name: is_demo
       type: bool
     indexes: []
@@ -409,100 +269,62 @@ db_schema:
   properties:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: owner
       target: users
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: name
       type: string
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: address
       type: string
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: kind
       type: string
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: units
       type: number
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: purchase_price
       type: number
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: purchase_date
       type: date
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: down_payment
       type: number
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: closing_costs
       type: number
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       name: improvements
       type: number
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       name: current_value
       type: number
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       name: value_date
       type: date
-    - admin_ui:
-        order: 12
-        width: 200
+    - admin_ui: {order: 12, width: 200}
       name: appreciation
       type: number
-    - admin_ui:
-        order: 13
-        width: 200
+    - admin_ui: {order: 13, width: 200}
       name: selling_pct
       type: number
-    - admin_ui:
-        order: 14
-        width: 200
+    - admin_ui: {order: 14, width: 200}
       name: door
       type: string
-    - admin_ui:
-        order: 15
-        width: 200
+    - admin_ui: {order: 15, width: 200}
       name: notes
       type: string
-    - admin_ui:
-        order: 16
-        width: 200
+    - admin_ui: {order: 16, width: 200}
       name: archived
       type: bool
-    - admin_ui:
-        order: 17
-        width: 200
+    - admin_ui: {order: 17, width: 200}
       name: created
       type: datetime
-    - admin_ui:
-        order: 18
-        width: 200
+    - admin_ui: {order: 18, width: 200}
       name: is_demo
       type: bool
     indexes: []
@@ -511,107 +333,67 @@ db_schema:
   tasks:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: owner
       target: users
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: tenancy
       target: tenancies
       type: link_single
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: property
       target: properties
       type: link_single
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: number
       type: number
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: title
       type: string
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: details
       type: string
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: category
       type: string
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: priority
       type: string
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: status
       type: string
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       name: requested_by
       type: string
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       name: requested_name
       type: string
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       name: requested_at
       type: datetime
-    - admin_ui:
-        order: 12
-        width: 200
+    - admin_ui: {order: 12, width: 200}
       name: acknowledged_at
       type: datetime
-    - admin_ui:
-        order: 13
-        width: 200
+    - admin_ui: {order: 13, width: 200}
       name: scheduled_for
       type: date
-    - admin_ui:
-        order: 14
-        width: 200
+    - admin_ui: {order: 14, width: 200}
       name: started_at
       type: datetime
-    - admin_ui:
-        order: 15
-        width: 200
+    - admin_ui: {order: 15, width: 200}
       name: done_at
       type: datetime
-    - admin_ui:
-        order: 16
-        width: 200
+    - admin_ui: {order: 16, width: 200}
       name: confirmed_at
       type: datetime
-    - admin_ui:
-        order: 17
-        width: 200
+    - admin_ui: {order: 17, width: 200}
       name: cost
       type: number
-    - admin_ui:
-        order: 18
-        width: 200
+    - admin_ui: {order: 18, width: 200}
       name: updated
       type: datetime
-    - admin_ui:
-        order: 19
-        width: 200
+    - admin_ui: {order: 19, width: 200}
       name: is_demo
       type: bool
     indexes: []
@@ -620,91 +402,57 @@ db_schema:
   tenancies:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       name: owner
       target: users
       type: link_single
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       name: property
       target: properties
       type: link_single
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       name: unit
       type: string
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       name: tenant_name
       type: string
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       name: tenant_email
       type: string
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       name: rent
       type: number
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       name: due_day
       type: number
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       name: deposit
       type: number
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       name: start_date
       type: date
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       name: end_date
       type: date
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       name: status
       type: string
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       name: token
       type: string
-    - admin_ui:
-        order: 12
-        width: 200
+    - admin_ui: {order: 12, width: 200}
       name: landlord_seen
       type: number
-    - admin_ui:
-        order: 13
-        width: 200
+    - admin_ui: {order: 13, width: 200}
       name: tenant_seen
       type: number
-    - admin_ui:
-        order: 14
-        width: 200
+    - admin_ui: {order: 14, width: 200}
       name: tenant_last_visit
       type: datetime
-    - admin_ui:
-        order: 15
-        width: 200
+    - admin_ui: {order: 15, width: 200}
       name: created
       type: datetime
-    - admin_ui:
-        order: 16
-        width: 200
+    - admin_ui: {order: 16, width: 200}
       name: is_demo
       type: bool
     indexes: []
@@ -713,104 +461,70 @@ db_schema:
   users:
     client: none
     columns:
-    - admin_ui:
-        order: 0
-        width: 200
+    - admin_ui: {order: 0, width: 200}
       client_hidden: false
       name: email
       type: string
-    - admin_ui:
-        order: 1
-        width: 200
+    - admin_ui: {order: 1, width: 200}
       client_hidden: true
       name: enabled
       type: bool
-    - admin_ui:
-        order: 2
-        width: 200
+    - admin_ui: {order: 2, width: 200}
       client_hidden: true
       name: last_login
       type: datetime
-    - admin_ui:
-        order: 3
-        width: 200
+    - admin_ui: {order: 3, width: 200}
       client_hidden: true
       name: password_hash
       type: string
-    - admin_ui:
-        order: 4
-        width: 200
+    - admin_ui: {order: 4, width: 200}
       client_hidden: true
       name: n_password_failures
       type: number
-    - admin_ui:
-        order: 5
-        width: 200
+    - admin_ui: {order: 5, width: 200}
       client_hidden: true
       name: confirmed_email
       type: bool
-    - admin_ui:
-        order: 6
-        width: 200
+    - admin_ui: {order: 6, width: 200}
       client_hidden: true
       name: signed_up
       type: datetime
-    - admin_ui:
-        order: 7
-        width: 200
+    - admin_ui: {order: 7, width: 200}
       client_hidden: false
       name: display_name
       type: string
-    - admin_ui:
-        order: 8
-        width: 200
+    - admin_ui: {order: 8, width: 200}
       client_hidden: false
       name: is_admin
       type: bool
-    - admin_ui:
-        order: 9
-        width: 200
+    - admin_ui: {order: 9, width: 200}
       client_hidden: false
       name: is_demo
       type: bool
-    - admin_ui:
-        order: 10
-        width: 200
+    - admin_ui: {order: 10, width: 200}
       client_hidden: false
       name: last_seen
       type: datetime
-    - admin_ui:
-        order: 11
-        width: 200
+    - admin_ui: {order: 11, width: 200}
       client_hidden: false
       name: legal_version
       type: string
-    - admin_ui:
-        order: 12
-        width: 200
+    - admin_ui: {order: 12, width: 200}
       client_hidden: false
       name: legal_accepted_at
       type: datetime
-    - admin_ui:
-        order: 13
-        width: 200
+    - admin_ui: {order: 13, width: 200}
       client_hidden: false
       name: legal_source
       type: string
-    - admin_ui:
-        order: 14
-        width: 200
+    - admin_ui: {order: 14, width: 200}
       client_hidden: false
       name: prefs
       type: simpleObject
     indexes: []
     server: full
     title: Users
-metadata:
-  description: Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident
-    record of messages and repairs.
-  logo_img: asset:icon-512.png
-  title: 'Good Landlord: rental numbers and fair tenant records'
+metadata: {description: 'Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs.', logo_img: 'asset:icon-512.png', title: 'Good Landlord: rental numbers and fair tenant records'}
 name: Good Landlord
 native_deps:
   head_html: |
@@ -879,25 +593,19 @@ native_deps:
 package_name: Good_Landlord
 runtime_options:
   client_version: '3'
-  server_spec:
-    base: python314
+  server_spec: {base: python314}
   version: 3
+secrets:
+  cloudflare_photos:
+    type: secret
+    value:
+      4MQMWWD42AMEB5UM: {? '' : UUgmVzXzjgHWsUtUxrjHvkm7E33vR9qX5WbpEuAZKYQKhhkkgHqQVKyWsYjaT4sxDIk7up95zehL21csrpXP4AJWofiaYMXK/E7ZgAJlwMf+mdL1JYlvuo/8H3d+5LcC2pE581L8Ww+4S3rycL0Y4IWwUmBVVrZ+EBd8KpDNRBqEU8MjaRzmzrQeA7jdbYx33oEHsDj/1j/cP821sUCK/GYLkYOcBY1Gjep6KsndATgIuCe0k0DPSIa6XOi2O7Tl4pfuAxnSBTflrUc6eP+e0WkGmqSzGu1fYXwvotNuC8k4+PATOnHoh3bWhC/V6TAhGhLxUn9pS93J5nElzraxOTfYPpuA}
 services:
-- client_config:
-    enable_v2: true
+- client_config: {enable_v2: true}
   server_config: {}
   source: /runtime/services/tables.yml
-- client_config:
-    allow_remember_me: true
-    allow_signup: true
-    confirm_email: false
-    enable_automatically: true
-    remember_me_days: 30
-    require_secure_passwords: true
-    use_email: true
-    use_google: true
-  server_config:
-    user_table: users
+- client_config: {allow_remember_me: true, allow_signup: true, confirm_email: false, enable_automatically: true, remember_me_days: 30, require_secure_passwords: true, use_email: true, use_google: true}
+  server_config: {user_table: users}
   source: /runtime/services/anvil/users.yml
 - client_config: {}
   server_config: {}
@@ -905,6 +613,4 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/secrets.yml
-startup:
-  module: startup
-  type: module
+startup: {module: startup, type: module}

@@ -1,15 +1,14 @@
 ---
 custom_component: true
-properties: []
 events:
-  - name: change
-    description: Photos were added or removed (read .count)
-toolbox_item:
-  title: Photo picker
-  group: Good Landlord
-help_text: |
+- description: Photos were added or removed (read .count)
+  name: change
+help_text: |-
   Choose up to 6 photos (shrunk in the browser, location data removed), shown as previews with a remove button.
   upload(get_tickets) sends them to Cloudflare and returns (photo_ids, error); clear() empties it.
+toolbox_item:
+  group: Good Landlord
+  title: Photo picker
 ---
 <div class="gl-pick">
   <div class="gl-pick-top">

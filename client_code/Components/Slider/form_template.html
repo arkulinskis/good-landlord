@@ -1,19 +1,19 @@
 ---
 custom_component: true
-properties:
-  - name: label
-    type: string
-    default_value: ""
-    description: What the slider sets (Sale price)
 events:
-  - name: change
-    description: The person moved the slider (value is already updated)
-toolbox_item:
-  title: Slider
-  group: Good Landlord
-help_text: |
+- description: The person moved the slider (value is already updated)
+  name: change
+help_text: |-
   A labelled range slider with its value shown on the right (the Deal check's sliders). Keys work too.
   setup(minimum, maximum, step, value, low_end, high_end) sets the range; .value and .shown read and write it.
+properties:
+- default_value: ''
+  description: What the slider sets (Sale price)
+  name: label
+  type: string
+toolbox_item:
+  group: Good Landlord
+  title: Slider
 ---
 <div class="dl-slider">
   <div class="top"><label anvil:dom-node="lbl"></label><output anvil:dom-node="out"></output></div>
