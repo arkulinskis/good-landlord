@@ -1,0 +1,21 @@
+---
+custom_component: true
+properties: []
+events:
+  - name: change
+    description: Photos were added or removed (read .count)
+toolbox_item:
+  title: Photo picker
+  group: Good Landlord
+help_text: |
+  Choose up to 6 photos (shrunk in the browser, location data removed), shown as previews with a remove button.
+  upload(get_tickets) sends them to Cloudflare and returns (photo_ids, error); clear() empties it.
+---
+<div class="gl-pick">
+  <div class="gl-pick-top">
+    <anvil-component type="Button" name="add_button" prop:text="Add photos" prop:role='["btn", "btn-sm", "ic-camera"]'></anvil-component>
+    <span class="ui-hint" anvil:dom-node="hint"></span>
+  </div>
+  <anvil-component type="RepeatingPanel" name="thumbs" prop:item_template="Good_Landlord.Items.PhotoThumb" prop:role='["gl-photos"]'></anvil-component>
+  <p class="ui-hint gl-pick-status" anvil:dom-node="status"></p>
+</div>

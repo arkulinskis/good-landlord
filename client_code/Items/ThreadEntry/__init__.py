@@ -35,11 +35,18 @@ class ThreadEntry(ThreadEntryTemplate):
             d["ev_br"].hidden = not more
             d["ev_more"].hidden = not more
             d["ev_meta"].textContent = "%s · #%d · %s" % (time, e["seq"], e["hash"][:6])
+            photos = e.get("photos") or []
+            if photos:
+                self.photos_panel.items = [{"src": p.get("url") or "", "href": p.get("url") or "", "index": i,
+                                            "alt": "Photo %d of entry #%d" % (i + 1, e["seq"])} for i, p in enumerate(photos)]
+                self.photos_panel.visible = True
             if e.get("task_id"):
                 d["ev"].classList.add("has-task")
                 d["ev"].setAttribute("role", "button")
                 d["ev"].setAttribute("tabindex", "0")
 
     def ev_click(self, event):
+        if event.target and event.target.closest("a[href]"):
+            return  # a photo opens on its own
         if self.item.get("task_id") and self.parent:
             self.parent.raise_event("x-task-id", task_id=self.item["task_id"])

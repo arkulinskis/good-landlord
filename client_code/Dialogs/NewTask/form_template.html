@@ -4,6 +4,7 @@
   <div class="gl-form-grid">
     <label class="ui-field full"><span>What needs doing?</span><anvil-component type="TextBox" name="title_box" prop:placeholder="The kitchen tap drips"></anvil-component></label>
     <label class="ui-field full"><span>Details <em>(optional)</em></span><anvil-component type="TextArea" name="details_box" prop:placeholder="Where, since when, what you tried"></anvil-component></label>
+    <div class="ui-field full" anvil:name="photos_field"><span>Photos <em>(optional)</em></span><anvil-component type="Good_Landlord.Components.PhotoPicker" name="picker"></anvil-component></div>
     <label class="ui-field"><span>Type</span><anvil-component type="DropDown" name="cat_box"></anvil-component></label>
     <label class="ui-field"><span>How urgent?</span><anvil-component type="DropDown" name="prio_box"></anvil-component></label>
   </div>

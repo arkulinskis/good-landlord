@@ -74,7 +74,9 @@ def get_portfolio():
     DemoData.ensure_loaded()
     props = list(app_tables.properties.search(tables.order_by("created"), owner=me))
     from . import Tenancy
-    tasks = [Tenancy.task_dict(t) for t in app_tables.tasks.search(tables.order_by("requested_at", ascending=False), owner=me)]
+    from . import Photos
+    by_task = Photos.maps(owner=me)[0]
+    tasks = [Tenancy.task_dict(t, by_task) for t in app_tables.tasks.search(tables.order_by("requested_at", ascending=False), owner=me)]
     return {"prefs": prefs_of(me), "categories": Ledger.CATEGORIES,
             "properties": [property_dict(p) for p in props],
             "mortgages": [mortgage_dict(m) for m in app_tables.mortgages.search(tables.order_by("start_date"), owner=me)],

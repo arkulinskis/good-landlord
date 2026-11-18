@@ -13,10 +13,13 @@ class TaskView(TaskViewTemplate):
     (set_task_status; a note, a date for Schedule, a cost for Done); the tenant confirms a done job (tenant_confirm).
     Closes with True when something changed."""
 
-    def __init__(self, task=None, landlord=False, tenant=False, token=None, name=None, **properties):
+    def __init__(self, task=None, landlord=False, tenant=False, token=None, name=None, photos_on=None, **properties):
         super().__init__(**properties)
         k: dict = dict(task or {})
         self._k, self._token, self._name, self._to = k, token, name, None
+        self._landlord = bool(landlord)
+        can_photo = bool(k.get("can_photo")) and (landlord or tenant) and photos_on is not False
+        self._photos(k.get("photos") or [], can_photo)
         d = self.dom_nodes
         d["chip"].className = "gl-status gl-st-" + k["status"]
         d["chip"].textContent = gl.STATUS_LABEL.get(k["status"], k["status"])
@@ -106,7 +109,52 @@ class TaskView(TaskViewTemplate):
 
     @handle("close_button", "click")
     def close_button_click(self, **event_args):
+        self.picker.clear()
         self.raise_event("x-close-alert", value=None)
+
+    # ---------------------------------------------------------------- photos
+    def _photos(self, photos, can_add):
+        items = []
+        for i, p in enumerate(photos):
+            who = "you" if (p.get("by") == "landlord") == self._landlord else (p.get("name") or "the other side")
+            items.append({"src": p.get("url") or "", "href": p.get("url") or "", "index": i,
+                          "alt": "Photo %d, added by %s on %s" % (i + 1, who, gl.fmt_date(p["created"][:10], "dm") if p.get("created") else "")})
+        self.photos_panel.items = items
+        self.photos_panel.visible = bool(items)
+        self.dom_nodes["photos_none"].hidden = bool(items) or not can_add
+        self.photo_add.visible = can_add
+        self.photos_box.visible = bool(items) or can_add
+        self.photo_send_row.visible = False
+
+    @handle("picker", "change")
+    def picker_change(self, **event_args):
+        n = self.picker.count
+        self.photo_send_row.visible = n > 0
+        self.photo_send.text = "Add %d photo%s to the record" % (n, "" if n == 1 else "s") if n else "Add to the record"
+        self.photo_error.visible = False
+
+    @handle("photo_send", "click")
+    def photo_send_click(self, **event_args):
+        self.photo_error.visible = False
+        self.photo_send.enabled = False
+        try:
+            if self._landlord:
+                ids, err = self.picker.upload(lambda items: anvil.server.call("photo_tickets", self._k["tenancy_id"], items))
+                r = None if err else anvil.server.call("add_task_photos", self._k["id"], ids)
+            else:
+                ids, err = self.picker.upload(lambda items: anvil.server.call("tenant_photo_tickets", self._token, items, self._name or None))
+                r = None if err else anvil.server.call("tenant_add_photos", self._token, self._k["id"], ids, self._name or None)
+        finally:
+            self.photo_send.enabled = True
+        if not err and isinstance(r, dict) and r.get("ok") is False:
+            err = r.get("error")
+        if err or not r:
+            self.photo_error.text = err or "That didn't work. Please try again."
+            self.photo_error.visible = True
+            return
+        self.picker.clear()
+        state.toast("Photos added. They're sealed into the record.", "ok")
+        self.raise_event("x-close-alert", value=True)
 
 
 def _dt(iso):

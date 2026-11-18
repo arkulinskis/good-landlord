@@ -5,7 +5,8 @@
                                                (a11y.js: axe-core WCAG 2.2 AA, and design.js run only with --only)
     python -I tools/ui_test.py --shots DIR     also screenshots of every page (desktop + phone, light + dark) into DIR
     python -I tools/ui_test.py --stop          stop the local server afterwards
-    python -I tools/ui_test.py --only a11y.js  one script (flow.js, phone.js, admin.js, a11y.js or design.js)
+    python -I tools/ui_test.py --only a11y.js  one script (smoke.js, a11y.js, design.js or photos.js: repair photos end to end
+                                               through the real Cloudflare Worker, desktop + phone)
                                                design.js = the rendered design check (APP_MAKER/design), desktop + phone:
                                                eyebrows, gradient text, invisible content, sideways scroll fail; tiny text,
                                                long lines, small touch targets, transition: all are warnings to fix
@@ -57,6 +58,12 @@ def copy_app():
     subprocess.run(["docker", "cp", "-", NAME + ":/apps/MainApp/"], input=buf.getvalue(), capture_output=True, check=True)
 
 
+def photo_secret():
+    """The real Cloudflare photo Worker's App Secret (tools/cloudflare/deploy.py wrote it), if this PC has it."""
+    f = pathlib.Path.home() / ".goodlandlord" / "cloudflare_photos.txt"
+    return ["--secret", "cloudflare_photos=" + f.read_text(encoding="utf-8").strip()] if f.exists() else []
+
+
 def start(restart=False):
     if restart:
         sh("docker", "rm", "-f", NAME, check=False)
@@ -65,7 +72,7 @@ def start(restart=False):
         sh("docker", "volume", "rm", KEY + "-app", check=False)  # fresh copy: no files left over from old versions
         sh("docker", "create", "--name", NAME, "-p", "%d:%d" % (PORT, PORT), "-v", KEY + "-app:/apps/MainApp",
            "-v", KEY + "-data:/anvil-data", IMAGE, "--app", "MainApp", "--origin", URL,
-           "--auto-migrate", "--secret", "admin_emails=admin@example.com")  # new tables/columns apply to the local database (--ignore-invalid-schema would block that)
+           "--auto-migrate", "--secret", "admin_emails=admin@example.com", *photo_secret())  # new tables/columns apply to the local database (--ignore-invalid-schema would block that)
         copy_app()
         sh("docker", "start", NAME)
         print("starting the App Server ...")
@@ -129,7 +136,8 @@ def main():
     only = args[args.index("--only") + 1] if "--only" in args else None  # e.g. --only a11y.js
     # smoke.js (every address, signed out / member / admin) runs by default; a11y.js and design.js only with --only
     for script, window in (("smoke.js", "1280,1000"), ("smoke.js", "390,844"), ("a11y.js", "1280,1000"),
-                           ("design.js", "1280,1000"), ("design.js", "390,844")):
+                           ("design.js", "1280,1000"), ("design.js", "390,844"), ("photos.js", "1280,1000"),
+                           ("photos.js", "390,844")):
         if (only and script != only) or (not only and script != "smoke.js"):
             continue
         text = drive(script, window, out / (script.replace(".js", "") + ("-phone" if window.startswith("390") else "")))

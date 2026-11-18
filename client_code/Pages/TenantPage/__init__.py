@@ -168,9 +168,14 @@ class TenantPage(TenantPageTemplate):
             self._seal(s)
 
     def _ask(self):
-        def send(title, details, category, priority):
-            return anvil.server.call("tenant_request", self.token, self._my_name(), title, details, category, priority)
-        if alert(NewTask(send=send), buttons=[], role="app-dialog", large=True, dismissible=True):
+        def send(title, details, category, priority, photo_ids):
+            return anvil.server.call("tenant_request", self.token, self._my_name(), title, details, category, priority,
+                                     photo_ids)
+
+        def tickets(items):
+            return anvil.server.call("tenant_photo_tickets", self.token, items, self._my_name())
+        if alert(NewTask(send=send, tickets=tickets if self.D.get("photos_on") else None),
+                 buttons=[], role="app-dialog", large=True, dismissible=True):
             state.toast("Request sent. The date is on record.", "ok")
             self._load(quiet=True)
 
@@ -191,7 +196,8 @@ class TenantPage(TenantPageTemplate):
 
     def _open_task(self, tid):
         k = next((x for x in self.D["tasks"] if x["id"] == tid), None)
-        if k and alert(TaskView(task=dict(k, where=""), tenant=True, token=self.token, name=self._my_name()),
+        if k and alert(TaskView(task=dict(k, where=""), tenant=True, token=self.token, name=self._my_name(),
+                                photos_on=bool(self.D.get("photos_on"))),
                        buttons=[], role="app-dialog", large=True, dismissible=True):
             self._load(quiet=True)
 

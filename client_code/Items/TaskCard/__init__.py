@@ -17,7 +17,8 @@ class TaskCard(TaskCardTemplate):
         d["urgent"].hidden = k.get("priority") != "urgent"
         d["num"].textContent = "#%d" % (k.get("number") or 0)
         d["title"].textContent = k["title"]
-        d["sub"].textContent = ((k.get("where") or "") + " · " if k.get("show_where") else "") + gl.task_when(k)
+        n = len(k.get("photos") or [])
+        d["sub"].textContent = ((k.get("where") or "") + " · " if k.get("show_where") else "") + gl.task_when(k) +             (" · %d photo%s" % (n, "" if n == 1 else "s") if n else "")
         d["btn"].setAttribute("data-key", k["id"])
 
     def btn_click(self, event):

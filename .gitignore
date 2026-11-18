@@ -3,3 +3,5 @@
 __pycache__
 .anvil-data
 /.anvil/
+tools/cloudflare/.wrangler/
+tools/cloudflare/node_modules/

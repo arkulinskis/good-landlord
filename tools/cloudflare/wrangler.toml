@@ -1,0 +1,10 @@
+# The goodlandlord-photos Worker: repair-request photos in the private R2 bucket "goodlandlord-photos".
+# Deploy with tools/cloudflare/deploy.py (it runs `wrangler deploy` here). The secret SIGNING_KEY is set by deploy.py.
+name = "goodlandlord-photos"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "goodlandlord-photos"

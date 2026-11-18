@@ -3,6 +3,8 @@
 Entries are append-only. No server function edits or deletes a message (only Admin -> Demo data removes
 demo rows). Each entry is sealed with a SHA-256 hash of its content plus the previous entry's hash, so
 changing or removing any entry later breaks the chain, and verify() says where.
+Photos (Photos.py) are sealed too: an entry with photos adds their SHA-256s (sorted) to its fingerprint, so removing,
+adding or swapping a photo breaks the chain as well. Entries without photos hash exactly as before.
 """
 import hashlib
 
@@ -20,9 +22,11 @@ def _stamp(t):
     return C.iso(t.replace(microsecond=0))
 
 
-def _digest(prev, seq, created, author_kind, author_name, body, event, task_no):
+def _digest(prev, seq, created, author_kind, author_name, body, event, task_no, photos=None):
     raw = "|".join([prev, str(int(seq)), _stamp(created), author_kind or "", author_name or "", body or "",
                     event or "", str(int(task_no)) if task_no else ""])
+    if photos:
+        raw += "|photos:" + ",".join(sorted(photos))
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
@@ -31,8 +35,9 @@ def entries(tenancy):
 
 
 @tables.in_transaction
-def append(tenancy, kind, author_kind, author_name, body, task=None, event=None, is_demo=False, when=None):
-    """Add one sealed entry. kind: message | event. author_kind: landlord | tenant | system."""
+def append(tenancy, kind, author_kind, author_name, body, task=None, event=None, is_demo=False, when=None, photos=None):
+    """Add one sealed entry. kind: message | event. author_kind: landlord | tenant | system.
+    photos: pending photo rows checked by Photos.claim; they're sealed into this entry and marked attached."""
     last = None
     for r in app_tables.messages.search(tables.order_by("seq", ascending=False), tenancy=tenancy):
         last = r
@@ -41,33 +46,42 @@ def append(tenancy, kind, author_kind, author_name, body, task=None, event=None,
     prev = last["hash"] if last else GENESIS
     created = (when or C.now()).replace(microsecond=0)
     task_no = task["number"] if task is not None else None
-    h = _digest(prev, seq, created, author_kind, author_name, body, event, task_no)
-    return app_tables.messages.add_row(tenancy=tenancy, seq=seq, kind=kind, author_kind=author_kind,
-                                       author_name=author_name, body=body, task=task, event=event, created=created,
-                                       prev_hash=prev, hash=h, is_demo=bool(is_demo))
+    photos = list(photos or [])
+    h = _digest(prev, seq, created, author_kind, author_name, body, event, task_no, [p["sha256"] for p in photos])
+    m = app_tables.messages.add_row(tenancy=tenancy, seq=seq, kind=kind, author_kind=author_kind,
+                                    author_name=author_name, body=body, task=task, event=event, created=created,
+                                    prev_hash=prev, hash=h, is_demo=bool(is_demo))
+    for p in photos:
+        p.update(message=m, task=task, status="attached")
+    return m
 
 
 def verify(tenancy):
     """Recompute the chain. {intact, count, head, broken_at}"""
     prev, n = GENESIS, 0
+    shas = {}
+    for p in app_tables.photos.search(tenancy=tenancy, status="attached"):
+        if p["message"] is not None:
+            shas.setdefault(p["message"].get_id(), []).append(p["sha256"] or "")
     for r in entries(tenancy):
         n += 1
         task_no = r["task"]["number"] if r["task"] is not None else None
         good = (r["seq"] == n and r["prev_hash"] == prev and
                 r["hash"] == _digest(prev, r["seq"], r["created"], r["author_kind"], r["author_name"], r["body"],
-                                     r["event"], task_no))
+                                     r["event"], task_no, shas.get(r.get_id())))
         if not good:
             return {"intact": False, "count": n, "head": (r["hash"] or "")[:12], "broken_at": n}
         prev = r["hash"]
     return {"intact": True, "count": n, "head": prev[:12] if n else "", "broken_at": None}
 
 
-def entry_dict(r):
+def entry_dict(r, photos=None):
+    """photos: this entry's photo views (Photos.maps()[1].get(id))."""
     t = r["task"]
     return {"id": r.get_id(), "seq": r["seq"], "kind": r["kind"], "author_kind": r["author_kind"],
             "author_name": r["author_name"] or "", "body": r["body"] or "", "event": r["event"],
             "task_id": t.get_id() if t is not None else None, "task_number": t["number"] if t is not None else None,
-            "created": C.iso(r["created"]), "hash": (r["hash"] or "")[:12]}
+            "created": C.iso(r["created"]), "hash": (r["hash"] or "")[:12], "photos": photos or []}
 
 
 def last_seq(tenancy):

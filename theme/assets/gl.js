@@ -362,10 +362,12 @@
     L.push('Downloaded ' + new Date().toString());
     L.push('Seal: ' + (o.seal.intact ? 'intact, ' + o.seal.count + ' entries, fingerprint ' + o.seal.head : 'BROKEN at entry #' + o.seal.broken_at));
     L.push('Each entry is sealed with a SHA-256 hash of its content and of the entry before it: changing or removing one breaks the chain.');
+    L.push('Photos are sealed into their entry by their own SHA-256 fingerprint (listed under the entry): a copy of a photo is the original only if its fingerprint matches.');
     L.push('');
     o.entries.forEach(function (e) {
       L.push('#' + e.seq + '  ' + new Date(e.created).toISOString().replace('T', ' ').slice(0, 19) + ' UTC  ' + (e.author_kind === 'system' ? 'Good Landlord' : e.author_name + ' (' + e.author_kind + ')') + (e.kind === 'event' ? '  [' + (e.event || 'event') + ']' : ''));
       e.body.split('\n').forEach(function (l) { L.push('    ' + l); });
+      (e.photos || []).forEach(function (p, i) { L.push('    photo ' + (i + 1) + ' SHA-256 ' + p.sha); });
       L.push('    seal ' + e.hash);
       L.push('');
     });

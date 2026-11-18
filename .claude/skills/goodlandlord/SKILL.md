@@ -142,6 +142,20 @@ tools/                     check.py, assets.py, build_icons.py, make_icons.py, u
   (`python -I APP_MAKER/tools/loaders.py apply goodlandlord <preset>`), `LEGAL_THEME` in startup.py.
 - **Icon:** edit theme/assets/icon.svg, `python -I tools/make_icons.py`, then `python tools/assets.py`.
 
+## Repair photos (Cloudflare R2, 2026-11-18)
+
+- Server `Photos.py` (read its docstring), table `photos` (pending -> attached), client `theme/assets/gl-photos.js`
+  (pick + shrink + PUT), `Components/PhotoPicker`, `Items/PhotoThumb`; used by Dialogs/NewTask (`tickets=` arg) and
+  Dialogs/TaskView (Add photos), shown in Items/ThreadEntry and counted on Items/TaskCard.
+- Worker `tools/cloudflare/worker.js` (private: GET/META/PUT/DELETE all need an HMAC-signed link; PUT refuses to
+  overwrite and stores the SHA-256). Deploy/test: `python -I tools/cloudflare/deploy.py [--test]`; the App Secret value
+  lives in `~/.goodlandlord/cloudflare_photos.txt` (never commit it). Live: https://goodlandlord-photos.addanapp.workers.dev
+- The seal: `Record.append(..., photos=rows)` adds `|photos:<sorted sha256s>` to the digest and marks the rows attached;
+  entries without photos hash exactly as before. Never add a callable that removes an attached photo.
+- Tests: server tests fake the Worker (`anvil.http.REPLIES`); `python -I tools/ui_test.py --only photos.js` runs the
+  whole flow through the REAL Worker (ui_test.py passes the secret to the App Server). Test files come from
+  `GLPhotos.testFiles`, not the system picker.
+
 ## Gotchas
 
 - The local App Server (1.18) lags hosted Anvil: no `HtmlComponent.attrs` (use state.set_attr), `Notification(role=)`

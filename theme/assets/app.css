@@ -1012,3 +1012,30 @@ anvil-dropzone { display: contents; }
 .anvil-notification, [data-notify="container"] { transition-property: opacity, transform !important; }
 .au-card a { display: inline-block; padding: 3px 0; }  /* 24px+ touch height */
 .anvil-notification .anvil-close, [data-notify="dismiss"] { min-width: 24px; min-height: 24px; }
+
+/* Repair photos (Components/PhotoPicker, Items/PhotoThumb, TaskView, ThreadEntry) */
+.anvil-role-gl-photos > div { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: var(--sp-2); }
+.anvil-role-gl-photos-sm > div { display: flex; flex-wrap: wrap; justify-content: center; }
+.anvil-role-gl-photos-sm > div > * { width: 64px; }
+.anvil-role-gl-ev-photos { justify-self: center; width: min(620px, 96%); margin-top: calc(-1 * var(--sp-1)); }
+.gl-ph { position: relative; aspect-ratio: 1; border-radius: var(--radius-sm); overflow: hidden; background: var(--c-surface-2);
+  border: 1px solid var(--c-line); }
+.gl-ph-a { display: block; width: 100%; height: 100%; }
+.gl-ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gl-ph-a[href] img { transition: transform var(--dur-base) var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .gl-ph-a[href]:hover img { transform: scale(1.04); } }
+.gl-ph-a[href]:focus-visible { outline: 3px solid var(--c-brand); outline-offset: -3px; }
+.gl-ph-rm { position: absolute; top: 4px; right: 4px; width: 32px; height: 32px; border-radius: 50%; border: 0; display: grid;
+  place-items: center; background: color-mix(in srgb, var(--c-ink) 78%, transparent); color: var(--c-bg); cursor: pointer;
+  transition: transform var(--dur-press) var(--ease-out), background-color var(--dur-fast) var(--ease-out); }
+.gl-ph-rm .ic { width: 16px; height: 16px; }
+.gl-ph-rm:hover { background: var(--c-ink); }
+.gl-ph-rm:active { transform: scale(.94); }
+.gl-ph-rm:focus-visible { outline: 3px solid var(--c-brand); outline-offset: 2px; }
+.gl-pick { display: grid; gap: var(--sp-2); }
+.gl-pick-top { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: center; }
+.gl-pick-top .ui-hint { margin: 0; }
+.gl-pick-status:empty { display: none; }
+.tv-photos { margin-top: 18px; }
+.ui .tv-photos h3 { margin: 0 0 var(--sp-2); }
+.tv-photo-add { margin-top: var(--sp-3); }

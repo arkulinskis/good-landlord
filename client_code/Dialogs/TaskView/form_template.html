@@ -14,6 +14,20 @@
     <dt anvil:dom-node="cost_dt">Cost</dt><dd anvil:dom-node="t_cost"></dd>
   </dl>
 
+  <div class="tv-photos" anvil:name="photos_box">
+    <h3>Photos</h3>
+    <anvil-component type="RepeatingPanel" name="photos_panel" prop:item_template="Good_Landlord.Items.PhotoThumb" prop:role='["gl-photos"]'></anvil-component>
+    <p class="muted small" anvil:dom-node="photos_none">No photos yet. A picture of the problem (and of the fix) makes the record clearer.</p>
+    <div class="ui-stack tv-photo-add" anvil:name="photo_add">
+      <anvil-component type="Good_Landlord.Components.PhotoPicker" name="picker"></anvil-component>
+      <div class="ui-row end" anvil:name="photo_send_row">
+        <anvil-component type="Button" name="photo_send" prop:text="Add to the record" prop:role='["btn", "btn-primary", "btn-sm", "ic-seal"]'></anvil-component>
+      </div>
+      <anvil-component type="Label" name="photo_error" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+      <p class="ui-hint" anvil:dom-node="photo_hint">Photos you add are sealed into the record with today's date. They can't be removed later.</p>
+    </div>
+  </div>
+
   <div class="ui-stack tv-moves" anvil:name="moves">
     <h3>Move it along</h3>
     <div class="gl-moves">

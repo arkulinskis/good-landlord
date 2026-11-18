@@ -7,12 +7,16 @@ from ... import gl, state
 
 class NewTask(NewTaskTemplate):
     """Ask for a repair (tenant: tenant_request) or add a task (landlord: landlord_new_task). send(title, details,
-    category, priority) makes the server call. It goes into the sealed record with today's date.
+    category, priority, photo_ids) makes the server call. It goes into the sealed record with today's date.
+    tickets(items) = the photo upload-link call (photo_tickets / tenant_photo_tickets); without it there are no photos.
     Closes with the reply or None."""
 
-    def __init__(self, send=None, title="Ask for a repair", lead="It goes into the record with today's date.", ok="Send request", **properties):
+    def __init__(self, send=None, title="Ask for a repair", lead="It goes into the record with today's date.", ok="Send request",
+                 tickets=None, **properties):
         super().__init__(**properties)
         self._send_fn = send or _no_send
+        self._tickets = tickets
+        self.photos_field.visible = tickets is not None
         self.title_label.text = title
         state.heading(self.title_label, 2)
         self.lead_label.text = lead
@@ -34,7 +38,12 @@ class NewTask(NewTaskTemplate):
         self.error_label.visible = False
         self.save_button.enabled = False
         try:
-            r = self._send_fn(self.title_box.text, self.details_box.text, self.cat_box.selected_value, self.prio_box.selected_value)
+            ids, err = self.picker.upload(self._tickets) if self._tickets is not None else ([], None)
+            if err:
+                self._fail(err)
+                return
+            r = self._send_fn(self.title_box.text, self.details_box.text, self.cat_box.selected_value,
+                              self.prio_box.selected_value, ids)
         finally:
             self.save_button.enabled = True
         if isinstance(r, dict) and r.get("ok") is False:
@@ -44,6 +53,7 @@ class NewTask(NewTaskTemplate):
 
     @handle("cancel_button", "click")
     def cancel_button_click(self, **event_args):
+        self.picker.clear()
         self.raise_event("x-close-alert", value=None)
 
     def _fail(self, message):
@@ -64,5 +74,5 @@ class NewTask(NewTaskTemplate):
         return r
 
 
-def _no_send(title, details, category, priority):
+def _no_send(title, details, category, priority, photo_ids=None):
     return {"ok": False, "error": "Nothing to send to."}

@@ -51,7 +51,7 @@ TAX_FORM = {
 EV_ICON = {"opened": "seal", "requested": "wrench", "acknowledged": "check", "scheduled": "calendar",
            "in_progress": "wrench", "done": "check", "declined": "x", "confirmed": "heart", "reopened": "refresh",
            "rent_paid": "receipt", "rent_removed": "receipt", "rent_changed": "coins", "ended": "key",
-           "reopened_tenancy": "key", "link_reset": "link"}
+           "reopened_tenancy": "key", "link_reset": "link", "photos": "camera"}
 
 
 def _js(value):

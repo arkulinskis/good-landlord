@@ -182,17 +182,22 @@ class Tenancy(TenancyTemplate):
 
     @handle("new_task", "click")
     def new_task_click(self, **event_args):
-        def send(title, details, category, priority):
-            return anvil.server.call("landlord_new_task", self.tid, title, details, category, priority)
+        def send(title, details, category, priority, photo_ids):
+            return anvil.server.call("landlord_new_task", self.tid, title, details, category, priority, photo_ids)
+
+        def tickets(items):
+            return anvil.server.call("photo_tickets", self.tid, items)
         r = alert(NewTask(send=send, title="Add a task", lead="For work you plan yourself (inspections, servicing). Your tenant sees it in their record.",
-                          ok="Add task"), buttons=[], role="app-dialog", large=True, dismissible=True)
+                          ok="Add task", tickets=tickets if self.D.get("photos_on") else None),
+                  buttons=[], role="app-dialog", large=True, dismissible=True)
         if r:
             state.toast("Task added", "ok")
             self._load(quiet=True)
 
     def _open_task(self, tid):
         k = next((x for x in self.D["tasks"] if x["id"] == tid), None)
-        if k and alert(TaskView(task=dict(k, where=""), landlord=True), buttons=[], role="app-dialog", large=True, dismissible=True):
+        if k and alert(TaskView(task=dict(k, where=""), landlord=True, photos_on=bool(self.D.get("photos_on"))),
+                       buttons=[], role="app-dialog", large=True, dismissible=True):
             self._load(quiet=True)
 
     def _task(self, task, **event_args):

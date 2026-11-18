@@ -309,6 +309,134 @@ ok(call("delete_entry", ex["id"]))
 assert T.ledger.get_by_id(ex["id"]) is not None
 bad(call("mark_rent_paid", ten["id"], "2026-09"))
 
+# ---------------------------------------------------------------------------------- repair photos (Cloudflare R2)
+import hashlib as _hl  # noqa: E402
+import urllib.parse as _up  # noqa: E402
+import anvil.http  # noqa: E402
+
+PH = M["Photos"]
+CF_BASE = "https://goodlandlord-photos.test.workers.dev"
+CF_KEY = "ab" * 32
+FILES = {}  # key -> {size, type, sha256}: the fake bucket
+
+
+def _fake_worker(url, method, data):
+    u = _up.urlparse(url)
+    key = u.path[1:]
+    q = dict(_up.parse_qsl(u.query))
+    meth = "META" if "meta" in q else method
+    extra = q.get("max", "") if meth == "PUT" else ""
+    want = PH.hmac.new(CF_KEY.encode(), "\n".join([meth, key, q.get("exp", ""), extra]).encode(), _hl.sha256).hexdigest()
+    if q.get("sig") != want:
+        return anvil.http.HttpError(403, "bad signature")
+    if meth == "META":
+        return dict(FILES[key], ok=True) if key in FILES else anvil.http.HttpError(404, "")
+    if meth == "DELETE":
+        FILES.pop(key, None)
+        return {"ok": True}
+    return anvil.http.HttpError(405, "")
+
+
+def upload(ticket, body=b"photo"):
+    """What the browser does with a ticket: PUT the bytes (here: drop them in the fake bucket)."""
+    key = _up.urlparse(ticket["put_url"]).path[1:]
+    FILES[key] = {"size": len(body), "type": ticket["type"], "sha256": _hl.sha256(body).hexdigest()}
+    return key
+
+
+JPG = {"type": "image/jpeg", "size": 250000, "width": 2000, "height": 1500}
+anvil.http.REPLIES[CF_BASE] = _fake_worker
+PH._cache["at"] = 0
+anvil.secrets.SECRETS.pop("cloudflare_photos", None)
+as_user(ana)
+assert not ok(call("get_tenancy", ten["id"]))["photos_on"], "no secret: photos are off"
+bad(call("photo_tickets", ten["id"], [JPG]), "no secret: no uploads")
+anvil.secrets.SECRETS["cloudflare_photos"] = "https://%s@%s" % (CF_KEY, CF_BASE[len("https://"):])
+PH._cache["at"] = 0
+assert ok(call("get_tenancy", ten["id"]))["photos_on"]
+
+# the tenant asks for a repair with two photos
+as_user(None)
+tok_now = T.tenancies.get_by_id(ten["id"])["token"]
+bad(call("tenant_photo_tickets", "nope-nope-nope", [JPG]), "a bad link gets no upload links")
+bad(call("tenant_photo_tickets", tok_now, []), "nothing chosen")
+bad(call("tenant_photo_tickets", tok_now, [dict(JPG, type="text/html")]), "photos only")
+bad(call("tenant_photo_tickets", tok_now, [dict(JPG, size=50 * 1024 * 1024)]), "too big")
+bad(call("tenant_photo_tickets", tok_now, [JPG] * 7), "six at a time")
+tk = ok(call("tenant_photo_tickets", tok_now, [JPG, JPG], "Rae"))["tickets"]
+assert len(tk) == 2 and all(t["put_url"].startswith(CF_BASE + "/gl/") for t in tk)
+assert all(T.photos.get_by_id(t["id"])["status"] == "pending" for t in tk)
+bad(call("tenant_request", tok_now, "Rae", "Mould in the bathroom", "", "other", "normal", [t["id"] for t in tk]),
+    "photos that never arrived are refused")
+assert not T.tasks.search(title="Mould in the bathroom"), "nothing is created when a photo is missing"
+k1, k2 = upload(tk[0], b"one"), upload(tk[1], b"two")
+r = ok(call("tenant_request", tok_now, "Rae", "Mould in the bathroom", "Behind the bath", "other", "normal",
+            [t["id"] for t in tk]))["task"]
+assert len(r["photos"]) == 2 and r["photos"][0]["url"].startswith(CF_BASE + "/" + k1 + "?") and r["can_photo"]
+assert "cost" not in r, "tenants still don't see costs"
+assert {p["sha"] for p in r["photos"]} == {_hl.sha256(b"one").hexdigest(), _hl.sha256(b"two").hexdigest()}
+bad(call("tenant_request", tok_now, "Rae", "Again", "", "other", "normal", [tk[0]["id"]]), "a photo is attached once")
+tv = ok(call("tenant_view", tok_now))
+assert tv["photos_on"] and tv["seal"]["intact"]
+ev = [e for e in tv["entries"] if e["event"] == "requested" and e["task_id"] == r["id"]][0]
+assert len(ev["photos"]) == 2, "the request's entry carries its photos"
+assert [t for t in tv["tasks"] if t["id"] == r["id"]][0]["photos"]
+
+# the landlord sees them, adds an "after" photo; someone else can't
+as_user(ana)
+g = ok(call("get_tenancy", ten["id"]))
+assert len([t for t in g["tasks"] if t["id"] == r["id"]][0]["photos"]) == 2
+assert len([t for t in call("get_portfolio")["tasks"] if t["id"] == r["id"]][0]["photos"]) == 2
+lt = ok(call("photo_tickets", ten["id"], [JPG]))["tickets"]
+upload(lt[0], b"after")
+bad(call("add_task_photos", r["id"], []), "nothing chosen")
+r2 = ok(call("add_task_photos", r["id"], [lt[0]["id"]], "All cleaned and sealed."))["task"]
+assert len(r2["photos"]) == 3 and r2["photos"][-1]["by"] == "landlord"
+last = T.messages.search(tenancy=T.tenancies.get_by_id(ten["id"]), event="photos")[0]
+assert last["body"].startswith("Added 1 photo to #") and "All cleaned" in last["body"]
+own_task = ok(call("landlord_new_task", ten["id"], "Paint the hall", "", "other", "normal", []))["task"]
+assert own_task["photos"] == []
+as_user(bob)
+bad(call("photo_tickets", ten["id"], [JPG]), "not bob's tenancy")
+bad(call("add_task_photos", r["id"], [lt[0]["id"]]), "not bob's task")
+as_user(None)
+tk3 = ok(call("tenant_photo_tickets", tok_now, [JPG]))["tickets"]
+upload(tk3[0], b"three")
+bad(call("tenant_add_photos", tok_now, "not-a-task", [tk3[0]["id"]]))
+ok(call("tenant_add_photos", tok_now, r["id"], [tk3[0]["id"]], "Rae", "Still a little damp."))
+as_user(ana)
+assert ok(call("verify_record", ten["id"]))["seal"]["intact"], "photos keep the seal intact"
+
+# the seal covers the photos: swap a fingerprint or drop a photo and it breaks
+prow = T.photos.get_by_id(tk[0]["id"])
+real = prow["sha256"]
+prow["sha256"] = "0" * 64
+assert not ok(call("verify_record", ten["id"]))["seal"]["intact"], "a swapped photo breaks the seal"
+prow["sha256"] = real
+prow["status"] = "removed"
+assert not ok(call("verify_record", ten["id"]))["seal"]["intact"], "a removed photo breaks the seal"
+prow["status"] = "attached"
+assert ok(call("verify_record", ten["id"]))["seal"]["intact"]
+for name in ("delete_photo", "remove_photo"):
+    assert name not in anvil.server.CALLABLES, "no way to delete an attached photo"
+
+# a photo can't be claimed by another tenancy; demo/sample records have photos off
+other = ok(call("save_tenancy", {"property_id": prop["id"], "unit": "Unit 2", "tenant_name": "Sam Other", "rent": 900,
+                                 "due_day": 1, "start_date": "2026-01-01"}))["tenancy"]
+ot = ok(call("photo_tickets", ten["id"], [JPG]))["tickets"]
+upload(ot[0], b"x")
+bad(call("landlord_new_task", other["id"], "Steal", "", "other", "normal", [ot[0]["id"]]), "photos stay in their tenancy")
+as_user(None)
+bad(call("tenant_photo_tickets", "demo-upstairs", [JPG]), "the public demo takes no photos")
+assert ok(call("tenant_view", "demo-upstairs"))["photos_on"] is False
+
+# unattached uploads are cleaned up: deleting an unused tenancy removes them, files too
+as_user(ana)
+pend = ok(call("photo_tickets", other["id"], [JPG]))["tickets"]
+pk = upload(pend[0], b"never used")
+ok(call("delete_tenancy", other["id"]))
+assert T.photos.get_by_id(pend[0]["id"]) is None and pk not in FILES, "a deleted tenancy leaves no stray photos"
+
 # ---------------------------------------------------------------------------------- the sample portfolio
 as_user(ana)
 ok(call("load_sample"))
@@ -352,7 +480,8 @@ if "legal_server" in M:
 # ---------------------------------------------------------------------------------- every callable is covered by a permission check
 # A callable that changes data without require_user / a C.require_* check is a security hole. List the public ones here.
 PUBLIC = {"log_client_error", "session_ping", "get_me", "submit_feedback", "legal_state", "legal_accept",
-          "tenant_view", "tenant_post", "tenant_request", "tenant_confirm"}  # the tenant side: the private link is the key
+          "tenant_view", "tenant_post", "tenant_request", "tenant_confirm",
+          "tenant_photo_tickets", "tenant_add_photos"}  # the tenant side: the private link is the key
 for name, (f, need) in sorted(anvil.server.CALLABLES.items()):
     if name in PUBLIC:
         continue

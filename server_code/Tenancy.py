@@ -11,7 +11,7 @@ import anvil.tables as tables
 from anvil.tables import app_tables
 
 from . import common as C
-from . import Record
+from . import Photos, Record
 from .Ledger import money
 
 STATUSES = ["requested", "acknowledged", "scheduled", "in_progress", "done", "declined"]
@@ -35,7 +35,8 @@ def where(t):
     return p["name"] + (" · " + t["unit"] if t["unit"] else "")
 
 
-def task_dict(r):
+def task_dict(r, pmap=None):
+    """pmap: {task_id: [photo views]} from Photos.maps() when listing many tasks; None = look this task's photos up."""
     t = r["tenancy"]
     days = None
     if r["requested_at"] is not None:
@@ -49,7 +50,9 @@ def task_dict(r):
             "requested_name": r["requested_name"] or "", "requested_at": C.iso(r["requested_at"]),
             "acknowledged_at": C.iso(r["acknowledged_at"]), "scheduled_for": C.iso(r["scheduled_for"]),
             "started_at": C.iso(r["started_at"]), "done_at": C.iso(r["done_at"]), "confirmed_at": C.iso(r["confirmed_at"]),
-            "cost": r["cost"], "updated": C.iso(r["updated"]), "days_open": days}
+            "cost": r["cost"], "updated": C.iso(r["updated"]), "days_open": days,
+            "photos": pmap.get(r.get_id(), []) if pmap is not None else Photos.task_photos(r),
+            "can_photo": Photos.allowed(t)}
 
 
 def response_stats(owner):
@@ -67,8 +70,9 @@ def response_stats(owner):
             "fix_days": round(statistics.median(fix), 1) if fix else None}
 
 
-def create_task(tenancy, by, name, title, details, category, priority, when=None):
-    """by: tenant | landlord. Adds the task and its 'requested' event to the record."""
+def create_task(tenancy, by, name, title, details, category, priority, when=None, photos=None):
+    """by: tenant | landlord. Adds the task and its 'requested' event to the record (photos: claimed photo rows,
+    sealed into that event)."""
     number = len(app_tables.tasks.search(tenancy=tenancy)) + 1
     at = (when or C.now()).replace(microsecond=0)
     task = app_tables.tasks.add_row(owner=tenancy["owner"], tenancy=tenancy, property=tenancy["property"], number=number,
@@ -77,7 +81,8 @@ def create_task(tenancy, by, name, title, details, category, priority, when=None
                                     updated=at, is_demo=bool(tenancy["is_demo"]))
     body = "Asked for #%d: %s%s%s" % (number, title, " (urgent)" if priority == "urgent" else "",
                                       ("\n" + details) if details else "")
-    Record.append(tenancy, "event", by, name, body, task=task, event="requested", is_demo=tenancy["is_demo"], when=at)
+    Record.append(tenancy, "event", by, name, body, task=task, event="requested", is_demo=tenancy["is_demo"], when=at,
+                  photos=photos)
     return task
 
 
@@ -176,6 +181,7 @@ def delete_tenancy(tenancy_id):
     if t["tenant_last_visit"] is not None or Record.last_seq(t) > 1 or len(app_tables.tasks.search(tenancy=t)) \
             or len(app_tables.ledger.search(tenancy=t)):
         return C.fail("This record has been used, so it's kept for good. You can end the tenancy instead.")
+    Photos.drop_pending(t)
     for m in app_tables.messages.search(tenancy=t):
         m.delete()
     t.delete()
@@ -205,10 +211,12 @@ def get_tenancy(tenancy_id):
     entries = Record.entries(t)
     if entries:
         t["landlord_seen"] = entries[-1]["seq"]
-    tasks = [task_dict(k) for k in app_tables.tasks.search(tables.order_by("number", ascending=False), tenancy=t)]
+    by_task, by_msg = Photos.maps(tenancy=t)
+    tasks = [task_dict(k, by_task) for k in app_tables.tasks.search(tables.order_by("number", ascending=False), tenancy=t)]
     p = t["property"]
     return C.ok(tenancy=Portfolio.tenancy_dict(t), property={"id": p.get_id(), "name": p["name"], "address": p["address"] or ""},
-                entries=[Record.entry_dict(e) for e in entries], tasks=tasks, seal=Record.verify(t),
+                entries=[Record.entry_dict(e, by_msg.get(e.get_id())) for e in entries], tasks=tasks, seal=Record.verify(t),
+                photos_on=Photos.allowed(t),
                 prefs=Portfolio.prefs_of(me), landlord_name=C.name_of(me),
                 rent_payments=rent_payments(t))
 
@@ -245,7 +253,7 @@ def verify_record(tenancy_id):
 
 # ------------------------------------------------------------------------------------------------ tasks
 @anvil.server.callable(require_user=True)
-def landlord_new_task(tenancy_id, title, details="", category="other", priority="normal"):
+def landlord_new_task(tenancy_id, title, details="", category="other", priority="normal", photo_ids=None):
     me = C.require_user()
     t = _owned(app_tables.tenancies, tenancy_id, me)
     if t is None:
@@ -255,7 +263,11 @@ def landlord_new_task(tenancy_id, title, details="", category="other", priority=
         return C.fail(err)
     if C.rate_limited("new_task", 60, 3600):
         return C.fail("That's a lot of tasks in one hour. Please try again later.")
-    task = create_task(t, "landlord", C.name_of(me), f["title"], f["details"], f["category"], f["priority"])
+    photos, err = Photos.claim(t, photo_ids)
+    if err:
+        return C.fail(err)
+    task = create_task(t, "landlord", C.name_of(me), f["title"], f["details"], f["category"], f["priority"],
+                       photos=photos)
     task["acknowledged_at"] = task["requested_at"]
     return C.ok(task=task_dict(task))
 

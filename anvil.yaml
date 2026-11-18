@@ -1,36 +1,5 @@
 allow_embedding: false
 db_schema:
-  error_log:
-    client: none
-    columns:
-    - admin_ui: {order: 0, width: 200}
-      name: when
-      type: datetime
-    - admin_ui: {order: 1, width: 120}
-      name: source
-      type: string
-    - admin_ui: {order: 2, width: 160}
-      name: kind
-      type: string
-    - admin_ui: {order: 3, width: 300}
-      name: message
-      type: string
-    - admin_ui: {order: 4, width: 300}
-      name: traceback
-      type: string
-    - admin_ui: {order: 5, width: 200}
-      name: page
-      type: string
-    - admin_ui: {order: 6, width: 120}
-      name: session
-      type: string
-    - admin_ui: {order: 7, width: 200}
-      name: user
-      target: users
-      type: link_single
-    indexes: []
-    server: full
-    title: Error log
   app_settings:
     client: none
     columns:
@@ -47,6 +16,53 @@ db_schema:
     indexes: []
     server: full
     title: App settings
+  error_log:
+    client: none
+    columns:
+    - admin_ui:
+        order: 0
+        width: 200
+      name: when
+      type: datetime
+    - admin_ui:
+        order: 1
+        width: 120
+      name: source
+      type: string
+    - admin_ui:
+        order: 2
+        width: 160
+      name: kind
+      type: string
+    - admin_ui:
+        order: 3
+        width: 300
+      name: message
+      type: string
+    - admin_ui:
+        order: 4
+        width: 300
+      name: traceback
+      type: string
+    - admin_ui:
+        order: 5
+        width: 200
+      name: page
+      type: string
+    - admin_ui:
+        order: 6
+        width: 120
+      name: session
+      type: string
+    - admin_ui:
+        order: 7
+        width: 200
+      name: user
+      target: users
+      type: link_single
+    indexes: []
+    server: full
+    title: Error log
   feedback:
     client: none
     columns:
@@ -305,6 +321,91 @@ db_schema:
     indexes: []
     server: full
     title: Mortgages
+  photos:
+    client: none
+    columns:
+    - admin_ui:
+        order: 0
+        width: 200
+      name: owner
+      target: users
+      type: link_single
+    - admin_ui:
+        order: 1
+        width: 200
+      name: tenancy
+      target: tenancies
+      type: link_single
+    - admin_ui:
+        order: 2
+        width: 200
+      name: task
+      target: tasks
+      type: link_single
+    - admin_ui:
+        order: 3
+        width: 200
+      name: message
+      target: messages
+      type: link_single
+    - admin_ui:
+        order: 4
+        width: 200
+      name: key
+      type: string
+    - admin_ui:
+        order: 5
+        width: 200
+      name: sha256
+      type: string
+    - admin_ui:
+        order: 6
+        width: 200
+      name: content_type
+      type: string
+    - admin_ui:
+        order: 7
+        width: 200
+      name: size
+      type: number
+    - admin_ui:
+        order: 8
+        width: 200
+      name: width
+      type: number
+    - admin_ui:
+        order: 9
+        width: 200
+      name: height
+      type: number
+    - admin_ui:
+        order: 10
+        width: 200
+      name: author_kind
+      type: string
+    - admin_ui:
+        order: 11
+        width: 200
+      name: author_name
+      type: string
+    - admin_ui:
+        order: 12
+        width: 200
+      name: status
+      type: string
+    - admin_ui:
+        order: 13
+        width: 200
+      name: created
+      type: datetime
+    - admin_ui:
+        order: 14
+        width: 200
+      name: is_demo
+      type: bool
+    indexes: []
+    server: full
+    title: Photos
   properties:
     client: none
     columns:
@@ -706,13 +807,14 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: "Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident record of messages and repairs."
-  logo_img: "asset:icon-512.png"
-  title: "Good Landlord: rental numbers and fair tenant records"
+  description: Track rent, expenses, mortgage and long-term profit for your rentals, and give tenants a private, tamper-evident
+    record of messages and repairs.
+  logo_img: asset:icon-512.png
+  title: 'Good Landlord: rental numbers and fair tenant records'
 name: Good Landlord
 native_deps:
   head_html: |
-    <script src="_/theme/legal-kit.js?v=e22fbb2086"></script>
+    <script src="_/theme/legal-kit.js?v=f28b6bc25f"></script>
     <!-- seo:start (APP_MAKER/seo: edit seo/apps/goodlandlord.json and run seo.py, not here) -->
     <link rel="canonical" href="https://good-landlord.anvil.app/">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -770,9 +872,10 @@ native_deps:
     <!-- Prepsto feedback panel: every "Submit feedback" link and button opens it (it is the only feedback channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->
     <script src="https://prepsto.com/_/theme/widget.js" data-prepsto="ba8qvqf" data-button="false" data-label="Submit feedback" async></script>
     <link rel="stylesheet" href="_/theme/icons.css?v=05750423d1">
-    <link rel="stylesheet" href="_/theme/app.css?v=9f1b06c1ea">
+    <link rel="stylesheet" href="_/theme/app.css?v=ae38798145">
     <script src="_/theme/app-kit.js?v=6acbab20cb"></script>
-    <script src="_/theme/gl.js?v=8b4d95f11c"></script>
+    <script src="_/theme/gl.js?v=39321a4a5e"></script>
+    <script src="_/theme/gl-photos.js?v=3cc1270ecd"></script>
 package_name: Good_Landlord
 runtime_options:
   client_version: '3'

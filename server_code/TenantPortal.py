@@ -9,7 +9,7 @@ import anvil.tables as tables
 from anvil.tables import app_tables
 
 from . import common as C
-from . import Record, Tenancy
+from . import Photos, Record, Tenancy
 
 BAD_LINK = "This link doesn't work any more. Ask your landlord for the new one."
 
@@ -40,6 +40,7 @@ def tenant_view(token, mark_seen=True):
     if mark_seen:
         t.update(tenant_seen=entries[-1]["seq"] if entries else 0, tenant_last_visit=C.now())
     p, owner = t["property"], t["owner"]
+    by_task, by_msg = Photos.maps(tenancy=t)
     from . import Portfolio
     return C.ok(
         tenancy={"unit": t["unit"] or "", "tenant_name": t["tenant_name"], "rent": t["rent"] or 0,
@@ -47,13 +48,14 @@ def tenant_view(token, mark_seen=True):
                  "end_date": C.iso(t["end_date"]), "status": t["status"], "demo": bool(t["is_demo"])},
         property={"name": p["name"], "address": p["address"] or "", "door": p["door"] or "red"},
         landlord_name=C.name_of(owner), currency=Portfolio.prefs_of(owner)["currency"],
-        entries=[Record.entry_dict(e) for e in entries],
-        tasks=[_task(k) for k in app_tables.tasks.search(tables.order_by("number", ascending=False), tenancy=t)],
-        rent_payments=Tenancy.rent_payments(t), stats=Tenancy.response_stats(owner), seal=Record.verify(t))
+        entries=[Record.entry_dict(e, by_msg.get(e.get_id())) for e in entries],
+        tasks=[_task(k, by_task) for k in app_tables.tasks.search(tables.order_by("number", ascending=False), tenancy=t)],
+        rent_payments=Tenancy.rent_payments(t), stats=Tenancy.response_stats(owner), seal=Record.verify(t),
+        photos_on=Photos.allowed(t))
 
 
-def _task(k):
-    d = Tenancy.task_dict(k)
+def _task(k, pmap=None):
+    d = Tenancy.task_dict(k, pmap)
     d.pop("cost", None)  # the landlord's costs are theirs
     return d
 
@@ -74,7 +76,7 @@ def tenant_post(token, name, body):
 
 
 @anvil.server.callable
-def tenant_request(token, name, title, details="", category="other", priority="normal"):
+def tenant_request(token, name, title, details="", category="other", priority="normal", photo_ids=None):
     t = _tenancy(token)
     if t is None:
         return C.fail(BAD_LINK)
@@ -83,7 +85,11 @@ def tenant_request(token, name, title, details="", category="other", priority="n
         return C.fail(err)
     if C.rate_limited("tenant_request", 12, 3600):
         return C.fail("That's a lot of requests in one hour. Please try again a little later.")
-    k = Tenancy.create_task(t, "tenant", _name(t, name), f["title"], f["details"], f["category"], f["priority"])
+    photos, err = Photos.claim(t, photo_ids)
+    if err:
+        return C.fail(err)
+    k = Tenancy.create_task(t, "tenant", _name(t, name), f["title"], f["details"], f["category"], f["priority"],
+                            photos=photos)
     return C.ok(task=_task(k))
 
 
