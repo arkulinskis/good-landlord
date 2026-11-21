@@ -1,0 +1,14 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]' prop:text="Condition report"></anvil-component>
+  <anvil-component type="Label" name="lead_label" prop:role='["muted"]'></anvil-component>
+  <div class="ui-field"><div class="ui-seg" role="group" aria-label="Which report">
+    <button type="button" anvil:name="in_button" anvil:on-dom:click="self.in_click">Move-in</button>
+    <button type="button" anvil:name="out_button" anvil:on-dom:click="self.out_click">Move-out</button>
+  </div></div>
+  <anvil-component type="RepeatingPanel" name="rooms_panel" prop:item_template="Good_Landlord.Items.RoomRow" prop:role='["gl-rooms"]'></anvil-component>
+  <div class="ui-row"><anvil-component type="Button" name="add_button" prop:text="Add a room" prop:role='["btn", "btn-sm", "ic-plus"]'></anvil-component></div>
+  <label class="ui-field gl-room-note"><span>General note <em>(optional)</em></span><anvil-component type="TextBox" name="note_box" prop:placeholder="Keys handed over, meter readings, smoke alarms tested"></anvil-component></label>
+  <p class="ui-hint">Once saved it goes into the sealed record with today's date. Nobody can change it afterwards; the other side can agree or say what isn't right.</p>
+  <anvil-component type="Label" name="error_label" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+  <div class="ui-row end dlg-acts"><anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component><anvil-component type="Button" name="save_button" prop:text="Seal the report" prop:role='["btn", "btn-primary", "ic-seal"]'></anvil-component></div>
+</div>

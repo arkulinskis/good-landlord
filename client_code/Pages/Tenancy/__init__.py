@@ -5,7 +5,10 @@ from anvil.js import window
 
 from ._anvil_designer import TenancyTemplate
 from ... import gl, router, state
+from ...Dialogs.ConditionReport import ConditionReport
 from ...Dialogs.NewTask import NewTask
+from ...Dialogs.RenewalPlan import RenewalPlan
+from ...Dialogs.ReportView import ReportView
 from ...Dialogs.ShareLink import ShareLink
 from ...Dialogs.TaskView import TaskView
 from ...Dialogs.TenancyForm import TenancyForm
@@ -26,6 +29,7 @@ class Tenancy(TenancyTemplate):
         self.open_panel.add_event_handler("x-task", self._task)
         self.closed_panel.add_event_handler("x-task", self._task)
         self.thread_panel.add_event_handler("x-task-id", self._task_id)
+        self.reports_panel.add_event_handler("x-report", self._report)
         state.set_control_attr(self.compose_box, "maxlength", 4000)
         state.set_control_attr(self.compose_box, "aria-label", "Your message")
         anvil.js.get_dom_node(self.compose_box).addEventListener("keydown", anvil.js.report_exceptions(self._keys))
@@ -88,7 +92,83 @@ class Tenancy(TenancyTemplate):
         self.end_button.visible = t["status"] != "ended"
         self.reopen_button.visible = t["status"] == "ended"
         self.delete_button.visible = (t.get("entries") or 0) <= 1 and not t.get("tenant_last_visit")
+        self._agreements(t, d.get("agreements") or {})
         window.setTimeout(anvil.js.report_exceptions(self._scroll_down), 30)
+
+    def _agreements(self, t, ag):
+        """Condition reports and the latest renewal offer (both live in the sealed record: server Agreements.py)."""
+        reps = [dict(r, side="landlord") for r in ag.get("reports") or []]
+        self.reports_panel.items = reps
+        self.no_reports.visible = not reps
+        rn = ag.get("renewal")
+        name = gl.first_name(t["tenant_name"])
+        text, apply_ok = "", False
+        if rn:
+            terms = gl.money(rn["rent"]) + " a month from " + gl.fmt_date(rn["from"]) +                 ((", until " + gl.fmt_date(rn["until"])) if rn.get("until") else ", open-ended")
+            st = rn["status"]
+            if st == "sent":
+                text = "Renewal offer #%d sent %s (%s). Waiting for %s." % (rn["seq"], gl.fmt_date(rn["created"]), terms, name)
+            elif st == "accepted":
+                text = "%s accepted offer #%d (%s). Apply it when the new terms start." % (rn.get("answered_by") or name, rn["seq"], terms)
+                apply_ok = True
+            elif st == "talk":
+                text = "%s would like to talk about offer #%d%s. Reply in the thread, then send a new offer if needed." % (
+                    rn.get("answered_by") or name, rn["seq"], (': "' + rn["answer_note"][:120] + '"') if rn.get("answer_note") else "")
+            else:
+                text = "Offer #%d applied on %s: %s." % (rn["seq"], gl.fmt_date(rn["applied_at"]), terms)
+        elif t.get("end_date"):
+            days = gl.days_between(gl.today_iso_js(), t["end_date"][:10])
+            text = ("The lease ends in %s. Plan the renewal and send the offer through the record: it's your proof of notice." % state.plural(days, "day"))                 if days >= 0 else "The lease end date has passed."
+        else:
+            text = "Open-ended lease. Changing the rent? Send it as a renewal offer, so your tenant's answer is on record."
+        self.dom_nodes["renew_text"].textContent = text
+        active = t["status"] != "ended"
+        self.renew_button.visible = active and not apply_ok
+        self.renew_button.text = "New offer" if rn and rn["status"] in ("sent", "talk") else "Plan renewal"
+        self.apply_button.visible = apply_ok
+        self.report_button.visible = True
+
+    def _report(self, report, **event_args):
+        def answer(agree, note):
+            return anvil.server.call("landlord_report_answer", self.tid, report["seq"], agree, note)
+        if alert(ReportView(report=report, side="landlord", answer=answer), buttons=[], role="app-dialog", large=True, dismissible=True):
+            state.toast("Answer sealed in the record", "ok")
+            self._load(quiet=True)
+
+    @handle("report_button", "click")
+    def report_button_click(self, **event_args):
+        reps = (self.D.get("agreements") or {}).get("reports") or []
+        move_in = next((r for r in reps if r["kind"] == "move_in"), None)
+        ended = self.D["tenancy"]["status"] == "ended"
+
+        def send(kind, rooms, note):
+            return anvil.server.call("landlord_report", self.tid, kind, rooms, note)
+        r = alert(ConditionReport(send=send, kind="move_out" if (move_in or ended) else "move_in",
+                                  move_in_rooms=move_in["rooms"] if move_in else None),
+                  buttons=[], role="app-dialog", large=True, dismissible=True)
+        if r:
+            state.toast("Report sealed. Your tenant can agree or say what isn't right.", "ok")
+            self._load(quiet=True)
+
+    @handle("renew_button", "click")
+    def renew_button_click(self, **event_args):
+        def send(rent, start, until, note):
+            return anvil.server.call("send_renewal", self.tid, rent, start, until, note)
+        if alert(RenewalPlan(tenancy=self.D["tenancy"], send=send), buttons=[], role="app-dialog", large=True, dismissible=True):
+            state.toast("Offer sealed in the record. Share the link so your tenant sees it.", "ok")
+            self._load(quiet=True)
+
+    @handle("apply_button", "click")
+    def apply_button_click(self, **event_args):
+        rn = (self.D.get("agreements") or {}).get("renewal")
+        if not rn:
+            return
+        if confirm("The rent becomes %s a month%s. The record notes the change." % (
+                gl.money(rn["rent"]), (" and the lease runs until " + gl.fmt_date(rn["until"])) if rn.get("until") else ", open-ended"),
+                title="Apply the new terms?", buttons=[("Cancel", False), ("Apply", True)], role="app-dialog"):
+            if state.call("apply_renewal", self.tid, rn["seq"]):
+                state.toast("New terms in place", "ok")
+                self._load(quiet=True)
 
     def _scroll_down(self):
         box = self.dom_nodes["thread_box"]

@@ -1,0 +1,58 @@
+<anvil-form layout="Good_Landlord.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap cx">
+      <div class="cx-head">
+        <anvil-component type="Label" name="title" prop:text="Rental property calculator" prop:role='["cx-title"]'></anvil-component>
+        <p class="muted cx-lead">Free, no sign-up. Type a price, a mortgage and the rent, and see the payment, the monthly cash flow and how the deal stacks up against the usual rules of thumb. Your numbers stay in your browser.</p>
+      </div>
+      <div class="dl-grid">
+        <section class="ui-card dl-card dl-calc">
+          <h2>The deal</h2>
+          <div class="gl-form-grid">
+            <label class="ui-field"><span>Price</span><anvil-component type="TextBox" name="c_price"></anvil-component></label>
+            <label class="ui-field"><span>Down payment (%)</span><anvil-component type="TextBox" name="c_down"></anvil-component></label>
+            <label class="ui-field"><span>Interest rate (%)</span><anvil-component type="TextBox" name="c_rate"></anvil-component></label>
+            <label class="ui-field"><span>Amortisation (years)</span><anvil-component type="TextBox" name="c_amort"></anvil-component></label>
+            <label class="ui-field"><span>Monthly rent</span><anvil-component type="TextBox" name="c_rent"></anvil-component></label>
+            <label class="ui-field"><span>Monthly costs (tax, insurance, upkeep)</span><anvil-component type="TextBox" name="c_costs"></anvil-component></label>
+            <label class="ui-field"><span>Payments</span><anvil-component type="DropDown" name="c_freq"></anvil-component></label>
+            <label class="ui-field"><span>Compounding</span><anvil-component type="DropDown" name="c_comp"></anvil-component></label>
+            <label class="ui-field"><span>Currency</span><anvil-component type="DropDown" name="c_cur"></anvil-component></label>
+          </div>
+          <div class="ui-row cx-share">
+            <anvil-component type="Button" name="share_button" prop:text="Copy a link to these numbers" prop:role='["btn", "btn-sm", "ic-link"]'></anvil-component>
+            <anvil-component type="Button" name="reset_button" prop:text="Start over" prop:role='["btn", "btn-sm", "btn-ghost", "ic-refresh"]'></anvil-component>
+          </div>
+        </section>
+        <section class="ui-card dl-card">
+          <div class="cx-verdict" anvil:dom-node="verdict"><anvil-component type="Good_Landlord.Components.House" name="house" prop:size="84" prop:door="honey"></anvil-component>
+            <div><h2 anvil:dom-node="v_head"></h2><p class="muted" anvil:dom-node="v_text"></p></div></div>
+          <div class="dl-big">
+            <div><span>Each payment</span><b anvil:dom-node="c_payment"></b></div>
+            <div><span>Mortgage per month</span><b anvil:dom-node="c_monthly"></b></div>
+            <div><span>Cash flow per month</span><b anvil:dom-node="c_cash"></b></div>
+            <div><span>Cash-on-cash</span><b anvil:dom-node="c_coc"></b></div>
+            <div><span>Borrowed</span><b anvil:dom-node="c_loan"></b></div>
+            <div><span>Total interest</span><b anvil:dom-node="c_interest"></b></div>
+          </div>
+        </section>
+      </div>
+      <section class="ui-card dl-card cx-rules">
+        <h2>Rules of thumb</h2>
+        <p class="muted">Quick checks investors use before looking closer. None of them decides for you.</p>
+        <div class="cx-rule-grid">
+          <div class="cx-rule" anvil:dom-node="r1"><span class="cx-dot" anvil:dom-node="r1_dot"></span><div><b>Cap rate</b> <span class="num" anvil:dom-node="r1_v"></span><p class="small muted">Rent minus costs over a year, divided by the price (before the mortgage). Around 5% or more is usually healthy.</p></div></div>
+          <div class="cx-rule" anvil:dom-node="r2"><span class="cx-dot" anvil:dom-node="r2_dot"></span><div><b>Debt cover</b> <span class="num" anvil:dom-node="r2_v"></span><p class="small muted">Rent minus costs, divided by the mortgage. Lenders like 1.2 or more.</p></div></div>
+          <div class="cx-rule" anvil:dom-node="r3"><span class="cx-dot" anvil:dom-node="r3_dot"></span><div><b>Break-even rent</b> <span class="num" anvil:dom-node="r3_v"></span><p class="small muted">The rent that covers the mortgage and the costs, with nothing left over.</p></div></div>
+          <div class="cx-rule" anvil:dom-node="r4"><span class="cx-dot" anvil:dom-node="r4_dot"></span><div><b>The 1% rule</b> <span class="num" anvil:dom-node="r4_v"></span><p class="small muted">Monthly rent as a share of the price. 1% is the old rule; in most cities today 0.5% to 0.7% is normal.</p></div></div>
+        </div>
+      </section>
+      <section class="ui-card dl-card">
+        <h2>The mortgage over time</h2>
+        <div class="dl-proj"><anvil-component type="Good_Landlord.Components.Chart" name="calc_chart"></anvil-component></div>
+      </section>
+      <div class="gl-banner cx-cta" anvil:name="guest_cta"><i class="ic ic-sparkle"></i><span class="gl-banner-t"><b>Bought it, or already own rentals?</b> Good Landlord tracks the real rent and costs, your tax categories and what you'd make if you sold. Free.</span><a class="ui-btn primary" href="#auth/signup">Track it for free</a></div>
+      <div class="gl-banner cx-cta" anvil:name="member_cta"><i class="ic ic-chart"></i><span class="gl-banner-t"><b>Already own it?</b> The Deal check uses your real numbers: equity, profit if sold, rate at renewal.</span><a class="ui-btn" href="#deal">Open the Deal check</a></div>
+    </div>
+  </anvil-block>
+</anvil-form>

@@ -481,7 +481,8 @@ if "legal_server" in M:
 # A callable that changes data without require_user / a C.require_* check is a security hole. List the public ones here.
 PUBLIC = {"log_client_error", "session_ping", "get_me", "submit_feedback", "legal_state", "legal_accept",
           "tenant_view", "tenant_post", "tenant_request", "tenant_confirm",
-          "tenant_photo_tickets", "tenant_add_photos"}  # the tenant side: the private link is the key
+          "tenant_photo_tickets", "tenant_add_photos", "tenant_report", "tenant_report_answer",
+          "tenant_renewal_answer"}  # the tenant side: the private link is the key
 for name, (f, need) in sorted(anvil.server.CALLABLES.items()):
     if name in PUBLIC:
         continue

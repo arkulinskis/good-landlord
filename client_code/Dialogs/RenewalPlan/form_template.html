@@ -1,0 +1,20 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]' prop:text="Plan the renewal"></anvil-component>
+  <p class="muted" anvil:dom-node="lead"></p>
+  <anvil-component type="Good_Landlord.Components.Slider" name="pct_slider" prop:label="Rent change"></anvil-component>
+  <div class="gl-form-grid">
+    <label class="ui-field"><span>New monthly rent</span><anvil-component type="TextBox" name="rent_box"></anvil-component></label>
+    <label class="ui-field"><span>New terms start</span><anvil-component type="TextBox" name="start_box"></anvil-component></label>
+    <label class="ui-field"><span>New lease ends <em>(empty = open-ended)</em></span><anvil-component type="TextBox" name="until_box"></anvil-component></label>
+    <label class="ui-field"><span>Note to your tenant <em>(optional)</em></span><anvil-component type="TextBox" name="note_box" prop:placeholder="Thank you for another good year"></anvil-component></label>
+  </div>
+  <div class="gl-rn-maths">
+    <div><span class="small muted">Each month</span><b anvil:dom-node="m_month"></b></div>
+    <div><span class="small muted">Over a year</span><b anvil:dom-node="m_year"></b></div>
+    <div><span class="small muted">One empty month costs</span><b anvil:dom-node="m_vacant"></b></div>
+  </div>
+  <p class="gl-rn-say" anvil:dom-node="say"></p>
+  <p class="ui-hint" anvil:dom-node="notice"></p>
+  <anvil-component type="Label" name="error_label" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+  <div class="ui-row end dlg-acts"><anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component><anvil-component type="Button" name="send_button" prop:text="Send the offer" prop:role='["btn", "btn-primary", "ic-send"]'></anvil-component></div>
+</div>

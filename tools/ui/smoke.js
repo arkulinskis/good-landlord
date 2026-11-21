@@ -97,6 +97,9 @@
     // ---- signed out
     await open('#landing', /Keep your word/);
     await open('#t/demo-upstairs', /Your landlord is/);
+    check('#t/demo-upstairs (reports)', /Condition reports/);
+    await open('#calculator', /Rules of thumb/);
+    await open('#calculator/price=420000&down=25&rent=2500&costs=600', /Cap rate/);
     await open('#t/no-such-link', /doesn't open a home/);
     await open('#auth', /Sign in/);
     await open('#auth/signup', /Create account/);
@@ -125,6 +128,10 @@
     const recHref = $('.tn-card a[href^="#tenancy/"]').getAttribute('href');
     await open('#tenants/requests', /In progress/);
     await open(recHref, /Lease/);
+    check(recHref + ' (agreements)', /Move-in, move-out/);
+    await dialog('condition report', button(/^Condition report$/), /Seal the report/);
+    const renew = button(/^(Plan renewal|New offer)$/);
+    if (renew) await dialog('renewal plan', renew, /Send the offer/);
     const card = $('.tc-side .gl-task');
     if (card) await dialog('task', card, /Asked/); else bad.push('no task card on the record');
     await dialog('tenant link', button(/Tenant's link/), /private link/);

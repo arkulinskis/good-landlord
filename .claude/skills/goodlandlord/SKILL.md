@@ -156,6 +156,18 @@ tools/                     check.py, assets.py, build_icons.py, make_icons.py, u
   whole flow through the REAL Worker (ui_test.py passes the secret to the App Server). Test files come from
   `GLPhotos.testFiles`, not the system picker.
 
+## Condition reports, renewal offers, free calculator (2026-11-20)
+
+- `server_code/Agreements.py` (read its docstring): reports, answers, offers and acceptances are Record entries with an
+  `event` (`report_move_in/out`, `report_agreed/disputed`, `renewal_offer/accepted/talk/applied`) and a fixed body shape
+  (room lines `Room: Condition — note`, offers end with a `Terms: rent .. · was .. · from .. · until ..` line).
+  `Agreements.summary(entries)` reads them back; it rides on `get_tenancy` / `tenant_view` as `agreements`, and
+  `tenancy_dict` carries `renewal` (Home's attention rows). Never change the body shapes: old entries must still parse.
+- Client: Dialogs/ConditionReport (+ Items/RoomRow), Dialogs/ReportView (+ Items/RoomLine), Dialogs/RenewalPlan,
+  Items/ReportRow; cards on Pages/Tenancy and Pages/TenantPage; `gl.add_days` / `gl.add_months` (dates via gl.js).
+- `#calculator` = Pages/Calculator, public, no server call (GL.calcVM / drawCalc); browser key `goodlandlord.calc.public`.
+  `state.store_get` returns a JavaScript object: read it with `.get(key)`, never `.items()`.
+
 ## Gotchas
 
 - The local App Server (1.18) lags hosted Anvil: no `HtmlComponent.attrs` (use state.set_attr), `Notification(role=)`

@@ -1,0 +1,24 @@
+<div class="ui gl-dlg">
+  <anvil-component type="Label" name="title_label" prop:role='["dlg-title"]'></anvil-component>
+  <p class="muted" anvil:dom-node="sub"></p>
+  <p class="gl-rv-counts" anvil:dom-node="counts"></p>
+  <div anvil:name="changes_box" class="gl-rv-changes">
+    <h3 anvil:dom-node="changes_h">Changes since move-in</h3>
+    <anvil-component type="RepeatingPanel" name="changes_panel" prop:item_template="Good_Landlord.Items.RoomLine" prop:role='["gl-rlist"]'></anvil-component>
+    <p class="ui-hint">Rooms that are worse than in the move-in report. Normal wear and tear usually can't come out of a deposit; damage can, with an itemised list.</p>
+  </div>
+  <h3 class="gl-rv-h">Room by room</h3>
+  <anvil-component type="RepeatingPanel" name="rooms_panel" prop:item_template="Good_Landlord.Items.RoomLine" prop:role='["gl-rlist"]'></anvil-component>
+  <p class="gl-rv-note" anvil:dom-node="note"></p>
+  <div class="gl-rv-answer" anvil:dom-node="answer"><i class="ic" anvil:dom-node="answer_icon"></i><span anvil:dom-node="answer_text"></span></div>
+  <div anvil:name="ask_box" class="gl-rv-ask">
+    <h3>Does this match what you see?</h3>
+    <label class="ui-field" anvil:name="why_field"><span>What isn't right?</span><anvil-component type="TextArea" name="why_box" prop:placeholder="The bedroom carpet already had a stain by the window"></anvil-component></label>
+    <anvil-component type="Label" name="error_label" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+    <div class="ui-row">
+      <anvil-component type="Button" name="agree_button" prop:text="I agree" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+      <anvil-component type="Button" name="disagree_button" prop:text="I don't agree" prop:role='["btn", "ic-chat"]'></anvil-component>
+    </div>
+  </div>
+  <div class="ui-row end dlg-acts"><anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component></div>
+</div>

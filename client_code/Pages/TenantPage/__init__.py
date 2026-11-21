@@ -5,7 +5,9 @@ from anvil.js import window
 
 from ._anvil_designer import TenantPageTemplate
 from ... import gl, router, state
+from ...Dialogs.ConditionReport import ConditionReport
 from ...Dialogs.NewTask import NewTask
+from ...Dialogs.ReportView import ReportView
 from ...Dialogs.TaskView import TaskView
 
 
@@ -23,9 +25,12 @@ class TenantPage(TenantPageTemplate):
         self.name_key = "tname." + self.token[:12]
         self.D: dict = {}
         self.last_seq = 0
+        self._todo_report = None
+        self._renewal = None
         self.open_panel.add_event_handler("x-task", self._task)
         self.closed_panel.add_event_handler("x-task", self._task)
         self.thread_panel.add_event_handler("x-task-id", self._task_id)
+        self.reports_panel.add_event_handler("x-report", self._report)
         state.set_control_attr(self.compose_box, "maxlength", 4000)
         state.set_control_attr(self.compose_box, "aria-label", "Your message")
         state.set_control_attr(self.name_box, "maxlength", 60)
@@ -99,6 +104,25 @@ class TenantPage(TenantPageTemplate):
         dn["f_addr"].textContent = p.get("address") or p["name"]
         self.rec_box.visible = bool(d["rent_payments"])
         self.rec_panel.items = d["rent_payments"][:12]
+        self._agreements(d.get("agreements") or {})
+
+    def _agreements(self, ag):
+        """Condition reports (list + "please check" banner) and the landlord's renewal offer (Accept / talk banner)."""
+        reps = [dict(r, side="tenant") for r in ag.get("reports") or []]
+        self.reports_panel.items = reps
+        self.no_reports.visible = not reps
+        todo = next((r for r in reps if r["author_kind"] != "tenant" and not r.get("answer")), None)
+        self._todo_report = todo
+        self.report_banner.visible = todo is not None
+        if todo:
+            self.dom_nodes["report_text"].textContent = "Please check the %s condition report from %s: agree, or say what isn't right." % (
+                todo["label"].lower(), gl.first_name(todo["author_name"]))
+        rn = ag.get("renewal")
+        self._renewal = rn
+        self.renew_banner.visible = bool(rn and rn["status"] == "sent")
+        if rn and rn["status"] == "sent":
+            terms = gl.money(rn["rent"], cents=True) + " a month from " + gl.fmt_date(rn["from"]) +                 ((", lease until " + gl.fmt_date(rn["until"])) if rn.get("until") else ", open-ended")
+            self.dom_nodes["renew_text"].textContent = gl.first_name(self.D["landlord_name"]) + " offers to renew: " + terms +                 "." + ((' "' + rn["note"] + '"') if rn.get("note") else "")
 
     def _seal(self, seal):
         """The seal box: intact (count + fingerprint, Check again) or broken at entry N."""
@@ -206,6 +230,60 @@ class TenantPage(TenantPageTemplate):
 
     def _task_id(self, task_id, **event_args):
         self._open_task(task_id)
+
+    def _report(self, report, **event_args):
+        def answer(agree, note):
+            return anvil.server.call("tenant_report_answer", self.token, report["seq"], agree, note, self._my_name())
+        if alert(ReportView(report=report, side="tenant", answer=answer),
+                 buttons=[], role="app-dialog", large=True, dismissible=True):
+            state.toast("Your answer is sealed in the record", "ok")
+            self._load(quiet=True)
+
+    @handle("check_button", "click")
+    def check_button_click(self, **event_args):
+        if self._todo_report:
+            self._report(self._todo_report)
+
+    @handle("report_button", "click")
+    def report_button_click(self, **event_args):
+        reps = (self.D.get("agreements") or {}).get("reports") or []
+        move_in = next((r for r in reps if r["kind"] == "move_in"), None)
+
+        def send(kind, rooms, note):
+            return anvil.server.call("tenant_report", self.token, kind, rooms, note, self._my_name())
+        if alert(ConditionReport(send=send, kind="move_out" if move_in else "move_in", move_in_rooms=move_in["rooms"] if move_in else None,
+                                 lead="Go room by room and note anything that isn't perfect. Your landlord can agree or say what they see."),
+                 buttons=[], role="app-dialog", large=True, dismissible=True):
+            state.toast("Report sealed in the record", "ok")
+            self._load(quiet=True)
+
+    def _renewal_answer(self, accept):
+        rn = self._renewal
+        if not rn:
+            return
+        note = ""
+        if accept:
+            if not confirm("Your landlord sees that you accepted, with today's date.", title="Accept the renewal offer?",
+                           buttons=[("Cancel", False), ("Accept", True)], role="app-dialog"):
+                return
+        else:
+            box = TextArea(placeholder="What would you like to talk about? (optional)")
+            state.set_control_attr(box, "maxlength", 1000)
+            state.set_control_attr(box, "aria-label", "What would you like to talk about?")
+            if not alert(box, title="Talk about the offer", buttons=[("Cancel", False), ("Send", True)], role="app-dialog"):
+                return
+            note = box.text or ""
+        if state.call("tenant_renewal_answer", self.token, rn["seq"], accept, note, self._my_name()):
+            state.toast("Answer sealed in the record", "ok")
+            self._load(quiet=True)
+
+    @handle("accept_button", "click")
+    def accept_button_click(self, **event_args):
+        self._renewal_answer(True)
+
+    @handle("talk_button", "click")
+    def talk_button_click(self, **event_args):
+        self._renewal_answer(False)
 
     @handle("answer_button", "click")
     def answer_button_click(self, **event_args):

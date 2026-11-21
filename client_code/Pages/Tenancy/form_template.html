@@ -31,6 +31,14 @@
               <details class="tc-closed" anvil:name="closed_box"><summary class="small muted" anvil:dom-node="closed_sum"></summary>
                 <anvil-component type="RepeatingPanel" name="closed_panel" prop:item_template="Good_Landlord.Items.TaskCard" prop:role='["tc-tasks"]'></anvil-component></details>
             </div>
+            <div class="ui-card gl-agree">
+              <h3 class="card-h">Move-in, move-out &amp; renewal</h3>
+              <anvil-component type="RepeatingPanel" name="reports_panel" prop:item_template="Good_Landlord.Items.ReportRow" prop:role='["tc-tasks"]'></anvil-component>
+              <p class="muted small tc-none" anvil:name="no_reports">No condition report yet. Walk through the home at move-in and seal what you both see: it settles deposit questions later.</p>
+              <div class="ui-row"><anvil-component type="Button" name="report_button" prop:text="Condition report" prop:role='["btn", "btn-sm", "ic-book"]'></anvil-component></div>
+              <p class="small gl-rn-status" anvil:dom-node="renew_text"></p>
+              <div class="ui-row"><anvil-component type="Button" name="renew_button" prop:text="Plan renewal" prop:role='["btn", "btn-sm", "ic-calendar"]'></anvil-component><anvil-component type="Button" name="apply_button" prop:text="Apply new terms" prop:role='["btn", "btn-sm", "btn-primary", "ic-check"]'></anvil-component></div>
+            </div>
             <div class="ui-card">
               <h3>Lease</h3>
               <dl class="tc-facts">

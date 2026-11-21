@@ -40,6 +40,29 @@ def attention(d):
         p = gl.prop(r["property_id"])
         items.append({"go": router.href("deal", r["property_id"], "mortgage"), "icon": "percent", "cls": "warn" if r["days"] < 45 else "",
                       "t": "Mortgage renews in " + state.plural(r["days"], "day"), "s": (p["name"] + " · " if p else "") + 'try the "rate at renewal" slider'})
+    for t in d["tenancies"]:
+        if t["status"] != "active":
+            continue
+        rn = t.get("renewal") or {}
+        go = router.href("tenancy", t["id"])
+        if rn.get("status") == "accepted":
+            items.append({"go": go, "icon": "heart", "cls": "", "t": (rn.get("by") or gl.first_name(t["tenant_name"])) + " accepted the renewal",
+                          "s": gl.money(rn.get("rent") or 0) + " from " + gl.fmt_date(rn.get("from")) + " · apply the new terms"})
+            continue
+        if rn.get("status") == "talk":
+            items.append({"go": go, "icon": "chat", "cls": "warn", "t": gl.first_name(t["tenant_name"]) + " wants to talk about the renewal",
+                          "s": t["property_name"] + " · reply in the record"})
+            continue
+        end = (t.get("end_date") or "")[:10]
+        if not end or rn.get("status") == "sent":
+            continue
+        days = gl.days_between(today, end)
+        if 0 <= days <= 120:
+            by = gl.add_days(end, -60)
+            left = gl.days_between(today, by)
+            items.append({"go": go, "icon": "calendar", "cls": "warn" if left < 14 else "",
+                          "t": "Lease ends in " + state.plural(days, "day") + ": " + t["tenant_name"],
+                          "s": ("Send the renewal offer by " + gl.fmt_date(by) if left >= 0 else "Notice is due: plan the renewal") + " · " + t["property_name"]})
     for k in d["tasks"]:
         if k["status"] == "scheduled" and k.get("scheduled_for"):
             days = gl.days_between(today, k["scheduled_for"][:10])

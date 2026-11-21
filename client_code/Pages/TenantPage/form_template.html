@@ -16,6 +16,10 @@
           <anvil-component type="Button" name="verify_button" prop:text="Check again" prop:role='["btn", "btn-sm", "btn-ghost", "ic-refresh"]'></anvil-component></div>
           <div class="gl-banner tp-confirm" anvil:name="confirm_banner"><i class="ic ic-check"></i><span class="gl-banner-t"><b anvil:dom-node="confirm_text"></b> Is it fixed?</span>
             <anvil-component type="Button" name="answer_button" prop:text="Answer" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component></div>
+          <div class="gl-banner tp-renew" anvil:name="renew_banner"><i class="ic ic-calendar"></i><span class="gl-banner-t" anvil:dom-node="renew_text"></span>
+            <span class="ui-row"><anvil-component type="Button" name="accept_button" prop:text="Accept" prop:role='["btn", "btn-sm", "btn-primary", "ic-check"]'></anvil-component><anvil-component type="Button" name="talk_button" prop:text="I'd like to talk" prop:role='["btn", "btn-sm", "ic-chat"]'></anvil-component></span></div>
+          <div class="gl-banner tp-report" anvil:name="report_banner"><i class="ic ic-book"></i><span class="gl-banner-t" anvil:dom-node="report_text"></span>
+            <anvil-component type="Button" name="check_button" prop:text="Check it" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component></div>
           <div class="tp-grid">
             <section class="ui-card">
               <div class="ui-row between"><h2 class="tp-h2">Messages</h2><anvil-component type="Button" name="ask_top" prop:text="Ask for a repair" prop:role='["btn", "btn-sm", "ic-wrench"]'></anvil-component></div>
@@ -33,6 +37,12 @@
                 <p class="muted small tc-none" anvil:name="no_open">Nothing open. If something needs fixing, ask here: the date you asked is recorded.</p>
                 <details class="tc-closed" anvil:name="closed_box"><summary class="small muted" anvil:dom-node="closed_sum"></summary>
                   <anvil-component type="RepeatingPanel" name="closed_panel" prop:item_template="Good_Landlord.Items.TaskCard" prop:role='["tc-tasks"]'></anvil-component></details>
+              </div>
+              <div class="ui-card gl-agree">
+                <h3 class="card-h">Condition reports</h3>
+                <anvil-component type="RepeatingPanel" name="reports_panel" prop:item_template="Good_Landlord.Items.ReportRow" prop:role='["tc-tasks"]'></anvil-component>
+                <p class="muted small tc-none" anvil:name="no_reports">No condition report yet. Moving in or out? Write down each room's condition: it's dated and sealed, so the deposit is fair for both of you.</p>
+                <div class="ui-row"><anvil-component type="Button" name="report_button" prop:text="Write a condition report" prop:role='["btn", "btn-sm", "ic-book"]'></anvil-component></div>
               </div>
               <div class="ui-card">
                 <h3>Your lease</h3>

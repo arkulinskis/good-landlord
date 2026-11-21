@@ -19,6 +19,7 @@ PAGES = {
     "property": ("user", "Property"),
     "money": ("user", "Money"),
     "deal": ("user", "Deal check"),
+    "calculator": (None, "Rental property calculator"),  # free, public (#calculator/price=..&rent=.. is shareable)
     "tenants": ("user", "Tenants"),
     "tenancy": ("user", "Tenancy record"),
     "t": (None, "Your home"),          # the tenant's private page (#t/<token>), no account
@@ -50,6 +51,9 @@ def _form(name):
     if name == "deal":
         from .Pages.Deal import Deal
         return Deal
+    if name == "calculator":
+        from .Pages.Calculator import Calculator
+        return Calculator
     if name == "tenants":
         from .Pages.Tenants import Tenants
         return Tenants

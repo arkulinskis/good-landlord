@@ -1039,3 +1039,61 @@ anvil-dropzone { display: contents; }
 .tv-photos { margin-top: 18px; }
 .ui .tv-photos h3 { margin: 0 0 var(--sp-2); }
 .tv-photo-add { margin-top: var(--sp-3); }
+
+/* Condition reports, renewal offers (Agreements.py, 2026-11-20) */
+.anvil-role-gl-rooms > div { display: grid; gap: var(--sp-3); margin: var(--sp-3) 0; }
+.gl-room { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .9fr) minmax(0, 2fr) auto; gap: var(--sp-2) var(--sp-3); align-items: end;
+  padding-bottom: var(--sp-3); border-bottom: 1px solid var(--c-line); }
+.gl-room .anvil-role-btn-icon { margin-bottom: 2px; }
+@media (max-width: 640px) {
+  .gl-room { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; }
+  .gl-room .gl-room-x { grid-column: 1 / -1; grid-row: 2; }
+}
+.gl-room-note { margin-top: var(--sp-2); }
+.anvil-role-gl-rlist > div { display: grid; gap: 0; }
+.gl-rl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px var(--sp-3); padding: var(--sp-2) 0; border-bottom: 1px solid var(--c-line); }
+.gl-rl-n { font-weight: 700; overflow-wrap: anywhere; }
+.gl-rl-x { grid-column: 1 / -1; overflow-wrap: anywhere; }
+.gl-cond { font: 700 .75rem/1.2 var(--font-body); padding: 4px 9px; border-radius: 999px; white-space: nowrap; align-self: start; }
+.gl-cond-good { background: var(--c-good-soft); color: var(--c-good); }
+.gl-cond-worn { background: var(--c-warn-soft); color: var(--c-warn); }
+.gl-cond-bad { background: var(--c-bad-soft); color: var(--c-bad); }
+.ui .gl-dlg h3 { margin: var(--sp-4) 0 var(--sp-1); font-size: 1.05rem; }
+.gl-rv-counts { color: var(--c-muted); font-size: .9rem; margin: 0; }
+.gl-rv-changes { background: var(--c-surface-2); border-radius: var(--radius-sm); padding: var(--sp-1) var(--sp-4) var(--sp-3); margin-top: var(--sp-3); }
+.gl-rv-note { margin: var(--sp-3) 0 0; overflow-wrap: anywhere; }
+.gl-rv-answer { display: flex; gap: var(--sp-2); align-items: flex-start; margin-top: var(--sp-4); padding: 10px 14px; border-radius: var(--radius-sm);
+  background: var(--c-surface-2); color: var(--c-ink); font-size: .92rem; overflow-wrap: anywhere; }
+.gl-rv-answer.good { background: var(--c-good-soft); color: var(--c-good); }
+.gl-rv-answer.bad { background: var(--c-bad-soft); color: var(--c-bad); }
+.gl-rv-answer .ic { flex: none; margin-top: 2px; }
+.gl-rv-ask { margin-top: var(--sp-2); display: grid; gap: var(--sp-2); }
+.gl-agree .anvil-role-tc-tasks { margin-top: var(--sp-2); }
+.gl-agree .ui-row { margin-top: var(--sp-2); }
+.gl-rn-status { margin: var(--sp-4) 0 0; color: var(--c-muted); overflow-wrap: anywhere; }
+.gl-rn-maths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-3); margin-top: var(--sp-4); }
+.gl-rn-maths > div { background: var(--c-surface-2); border-radius: var(--radius-sm); padding: 10px 12px; display: grid; gap: 2px; }
+.gl-rn-maths b { font: 700 1.15rem/1.2 var(--font-display); font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .gl-rn-maths { grid-template-columns: minmax(0, 1fr); } }
+.gl-rn-say { margin: var(--sp-3) 0 0; }
+.tp-renew, .tp-report { margin-bottom: var(--sp-4); }
+
+/* The free rental calculator (#calculator, 2026-11-20) */
+.cx { padding-top: var(--sp-5); padding-bottom: var(--sp-7); display: grid; gap: 18px; }
+.anvil-role-cx-title { font: 650 clamp(1.8rem, 4vw, 2.4rem)/1.1 var(--font-display); color: var(--c-ink); text-wrap: balance; }
+.cx-lead { max-width: 62ch; margin: var(--sp-2) 0 0; }
+.cx-share { margin-top: var(--sp-4); flex-wrap: wrap; }
+.cx-verdict { display: flex; gap: var(--sp-4); align-items: center; margin-bottom: var(--sp-3); }
+.cx-verdict > :first-child { flex: none; }
+.ui .cx-verdict h2 { margin: 0 0 var(--sp-1); font-size: 1.35rem; }
+.cx-verdict p { margin: 0; }
+.cx-rule-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); margin-top: var(--sp-3); }
+@media (max-width: 640px) { .cx-rule-grid { grid-template-columns: minmax(0, 1fr); } }
+.cx-rule { display: flex; gap: var(--sp-3); align-items: flex-start; }
+.cx-rule p { margin: var(--sp-1) 0 0; }
+.cx-rule .num { font-weight: 800; font-variant-numeric: tabular-nums; margin-left: var(--sp-1); }
+.cx-dot { flex: none; width: 12px; height: 12px; border-radius: 50%; margin-top: 6px; background: var(--c-line); }
+.cx-dot.good { background: var(--c-good); } .cx-dot.warn { background: var(--c-warn); } .cx-dot.bad { background: var(--c-bad); }
+.cx-cta { margin: 0; }
+.lp-calc { margin: var(--sp-4) 0 0; }
+.lp-calc a { display: inline-flex; gap: var(--sp-2); align-items: center; font-weight: 700; padding: 3px 0; }

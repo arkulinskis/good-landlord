@@ -51,7 +51,9 @@ TAX_FORM = {
 EV_ICON = {"opened": "seal", "requested": "wrench", "acknowledged": "check", "scheduled": "calendar",
            "in_progress": "wrench", "done": "check", "declined": "x", "confirmed": "heart", "reopened": "refresh",
            "rent_paid": "receipt", "rent_removed": "receipt", "rent_changed": "coins", "ended": "key",
-           "reopened_tenancy": "key", "link_reset": "link", "photos": "camera"}
+           "reopened_tenancy": "key", "link_reset": "link", "photos": "camera",
+           "report_move_in": "book", "report_move_out": "book", "report_agreed": "check", "report_disputed": "chat",
+           "renewal_offer": "calendar", "renewal_accepted": "heart", "renewal_talk": "chat", "renewal_applied": "key"}
 
 
 def _js(value):
@@ -292,6 +294,17 @@ def window_today_long():
 
 def days_between(a_iso, b_iso):
     return int(window.GL.daysBetween(a_iso, b_iso))
+
+
+def add_days(iso, n):
+    """'YYYY-MM-DD' plus n days (n may be negative)."""
+    d = window.GL.d(iso[:10])
+    d.setDate(d.getDate() + int(n))
+    return str(window.GL.iso(d))
+
+
+def add_months(iso, n):
+    return str(window.GL.iso(window.GL.addMonths(window.GL.d(iso[:10]), int(n))))
 
 
 def iso_days_ago(n):

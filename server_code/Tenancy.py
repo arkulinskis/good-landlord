@@ -11,7 +11,7 @@ import anvil.tables as tables
 from anvil.tables import app_tables
 
 from . import common as C
-from . import Photos, Record
+from . import Agreements, Photos, Record
 from .Ledger import money
 
 STATUSES = ["requested", "acknowledged", "scheduled", "in_progress", "done", "declined"]
@@ -218,7 +218,7 @@ def get_tenancy(tenancy_id):
                 entries=[Record.entry_dict(e, by_msg.get(e.get_id())) for e in entries], tasks=tasks, seal=Record.verify(t),
                 photos_on=Photos.allowed(t),
                 prefs=Portfolio.prefs_of(me), landlord_name=C.name_of(me),
-                rent_payments=rent_payments(t))
+                rent_payments=rent_payments(t), agreements=Agreements.summary(entries))
 
 
 def rent_payments(t):

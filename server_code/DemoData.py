@@ -155,6 +155,7 @@ def build_portfolio(owner, owner_name, tokens=None):
                                      start_date=p["purchase_date"] + dt.timedelta(days=after), frequency="monthly",
                                      compounding="semiannual", created=now, is_demo=True)
     tens = []
+    lease_ends = {0: 75, 2: 40}  # the Patels' lease ends soon (Home: send the renewal notice); Sam already accepted one
     for i, (key, unit, name, email, rent, due, dep, ago) in enumerate(TENANCIES):
         if i == 1:  # Lucie pays a few days late this month (the rent roll shows it, her message explains it)
             due = max(1, min(28, today.day - 3))
@@ -162,6 +163,7 @@ def build_portfolio(owner, owner_name, tokens=None):
         t = app_tables.tenancies.add_row(owner=owner, property=props[key], unit=unit, tenant_name=name,
                                          tenant_email=email, rent=rent, due_day=due, deposit=dep,
                                          start_date=today - dt.timedelta(days=ago), status="active", token=token,
+                                         end_date=(today + dt.timedelta(days=lease_ends[i])) if i in lease_ends else None,
                                          landlord_seen=0, tenant_seen=0, tenant_last_visit=now - dt.timedelta(hours=3 + i * 5),
                                          created=now - dt.timedelta(days=ago), is_demo=True)
         tens.append(t)
@@ -207,7 +209,7 @@ def _month_name(y, m):
 
 def _stories(owner, landlord, tens, now):
     """Conversations and requests, written through the same sealed record as real ones."""
-    from . import Tenancy
+    from . import Agreements, Tenancy
     H = dt.timedelta(hours=1)
     D = dt.timedelta(days=1)
 
@@ -258,6 +260,7 @@ def _stories(owner, landlord, tens, now):
     opened(t, start)
     msg(t, start + 2 * H, "L", "Welcome to our shared record! Anything about the apartment can go here, and it stays here for both of us.")
     msg(t, start + 5 * H, "T", "Great, thanks Maya. Much easier than digging through texts.")
+    Agreements.demo_story(t, landlord, first(t), start + 1 * D, agree_after=6 * H)
     k = task(t, now - 40 * D, "tenant", "Kitchen tap drips", "The hot side drips about once a second, even when fully closed.", "plumbing", "normal")
     move(t, k, now - 40 * D + 3 * H, "acknowledged", "Thanks for flagging. I'll call the plumber tomorrow.")
     move(t, k, now - 39 * D, "scheduled", "Plumber (Flow Bros) comes between 9 and 11.", day=(now - 37 * D).date())
@@ -288,6 +291,9 @@ def _stories(owner, landlord, tens, now):
     # Harbour: Sam
     t = tens[2]
     opened(t, now - 100 * D)
+    end = t["end_date"]
+    Agreements.demo_offer(t, landlord, first(t), now - 5 * D, 2195, end + D, end + 365 * D, accept_after=20 * H,
+                          currency=(owner["prefs"] or {}).get("currency") or "CAD")
     k = task(t, now - 3 * D, "tenant", "Dishwasher won't drain", "Water stays at the bottom after every cycle. I cleaned the filter.", "appliance", "normal")
     move(t, k, now - 3 * D + 5 * H, "acknowledged")
     move(t, k, now - 2 * D, "scheduled", "Appliance repair visit; you don't need to be home, I'll let them in.", day=(now + 2 * D).date())

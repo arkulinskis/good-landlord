@@ -63,6 +63,8 @@ def tenancy_dict(r, with_counts=True):
         last = next((m for m in msgs if m["kind"] == "message"), None)
         d["last_message"] = ({"author_kind": last["author_kind"], "author_name": last["author_name"],
                               "body": (last["body"] or "")[:140], "created": C.iso(last["created"])} if last else None)
+        from . import Agreements
+        d["renewal"] = Agreements.renewal_state(list(reversed(msgs)))
         d["open_tasks"] = len([t for t in app_tables.tasks.search(tenancy=r) if t["status"] not in ("done", "declined")])
     return d
 

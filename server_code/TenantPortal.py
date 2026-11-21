@@ -9,7 +9,7 @@ import anvil.tables as tables
 from anvil.tables import app_tables
 
 from . import common as C
-from . import Photos, Record, Tenancy
+from . import Agreements, Photos, Record, Tenancy
 
 BAD_LINK = "This link doesn't work any more. Ask your landlord for the new one."
 
@@ -51,7 +51,7 @@ def tenant_view(token, mark_seen=True):
         entries=[Record.entry_dict(e, by_msg.get(e.get_id())) for e in entries],
         tasks=[_task(k, by_task) for k in app_tables.tasks.search(tables.order_by("number", ascending=False), tenancy=t)],
         rent_payments=Tenancy.rent_payments(t), stats=Tenancy.response_stats(owner), seal=Record.verify(t),
-        photos_on=Photos.allowed(t))
+        photos_on=Photos.allowed(t), agreements=Agreements.summary(entries))
 
 
 def _task(k, pmap=None):
